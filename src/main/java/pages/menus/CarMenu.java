@@ -3,6 +3,7 @@ package pages.menus;
 import aquality.selenium.elements.interfaces.IButton;
 import aquality.selenium.elements.interfaces.IComboBox;
 import aquality.selenium.forms.Form;
+import models.CarInfo;
 import org.openqa.selenium.By;
 import utils.WebElementsUtils;
 
@@ -21,14 +22,14 @@ public class CarMenu extends Form {
         super(By.xpath("//div[contains(@class, 'research-search')]"), "Add Car Form");
     }
 
-    public void addCar(String maker, String model, String year, String trim) {
-        sltMaker.clickAndSelectByText(maker);
+    public void addCar(CarInfo carInfo) {
+        sltMaker.clickAndSelectByText(carInfo.getMaker());
         sltModel.state().waitForClickable();
-        sltModel.clickAndSelectByText(model);
+        sltModel.clickAndSelectByText(carInfo.getModel());
         sltModel.state().waitForClickable();
-        sltYear.clickAndSelectByText(year);
+        sltYear.clickAndSelectByText(carInfo.getYear());
         sltStyle.state().waitForClickable();
-        sltStyle.clickAndSelectByText(trim);
+        sltStyle.clickAndSelectByText(carInfo.getTrimInfo().getStyle());
         btnSubmit.state().waitForClickable();
         btnSubmit.click();
     }

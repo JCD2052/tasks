@@ -60,7 +60,7 @@ public class ResultPage extends BasePage {
     }
 
     private String getTransmission(int position) {
-        String columnLocator = String.format("//td[%s]//p", position);
+        String columnLocator = String.format(COLUMN_LOCATOR, position);
         return WebElementsUtils
                 .geTextFromElements(By.xpath(TRANSMISSION_LOCATOR + columnLocator), ILabel.class)
                 .stream()

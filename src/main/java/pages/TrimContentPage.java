@@ -14,6 +14,7 @@ class TrimContentPage extends BasePage {
     private final static String BASE_TRIM_LOCATOR = "//div[contains(@id, 'panel%s')]";
     private final static String TABLE_CONTENT_LOCATOR = "//tr[contains(@class, 'content')]";
     private final static String BUTTON_LOCATOR = "//preceding-sibling::h2//button";
+    private final static String SHOW_TRIM_BUTTON = "//div[@class = 'sds-accordion']";
 
     TrimContentPage() {
         super(By.xpath("//div[contains(@class, 'trim-summary')]"), "Trim Content");
@@ -21,7 +22,7 @@ class TrimContentPage extends BasePage {
 
     public boolean checkTrimAvailability() {
         return !getElementFactory()
-                .findElements(By.xpath("//div[@class = 'sds-accordion']"), ILabel.class)
+                .findElements(By.xpath(SHOW_TRIM_BUTTON), ILabel.class)
                 .isEmpty();
     }
 
