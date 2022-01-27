@@ -2,29 +2,35 @@ package pages;
 
 import aquality.selenium.elements.interfaces.IButton;
 import aquality.selenium.elements.interfaces.ITextBox;
+import model.User;
 import org.openqa.selenium.By;
+import pages.forms.CookieForm;
 
-//TODO ALL LOCATORS HAVE @data-at-selector TAG. MB NEED CREATE SEPARATE CLASS FOR STRING FORMAT AND USE THIS LOCATOR.
-
-public class LoginPage extends BasePage {
-    private final static String BASE_INPUT_FIELDS_LOCATOR = "//input[contains(@data-at-selector, '%s') " +
-            "and contains(@data-at-selector, 'Input')]";
+public class LoginPage extends MainPage {
     private final ITextBox textEmail = getElementFactory()
-            .getTextBox(By.xpath(String.format(BASE_INPUT_FIELDS_LOCATOR, "email")), "Email");
+            .getTextBox(By.xpath("//input[contains(@data-at-selector, 'email') " +
+                    "and contains(@data-at-selector, 'Input')]"), "Email");
     private final ITextBox textPassword = getElementFactory()
-            .getTextBox(By.xpath(String.format(BASE_INPUT_FIELDS_LOCATOR, "password")), "Password");
+            .getTextBox(By.xpath("//input[contains(@data-at-selector, 'password') " +
+                    "and contains(@data-at-selector, 'Input')]"), "Password");
     private final IButton btnLogin = getElementFactory()
             .getButton(By.xpath("//kl-button[contains(@atselector, 'welcome') " +
                             "and contains(@atselector, 'SignInBtn')]//button"),
                     "Sign In");
+    private final CookieForm cookieForm;
+
 
     public LoginPage() {
         super(By.xpath("//kl-welcome[contains(@class, 'welcome-main a-flex-column')]"), "Login");
+        this.cookieForm = new CookieForm();
     }
 
-    public void logIn(String email, String password) {
-        textEmail.clearAndType(email);
-        textPassword.clearAndType(password);
+    public void logIn(User user) {
+        if (cookieForm.waitForLoad()) {
+            cookieForm.acceptCookies();
+        }
+        textEmail.clearAndType(user.getEmail());
+        textPassword.clearAndType(user.getPassword());
         btnLogin.click();
     }
 }

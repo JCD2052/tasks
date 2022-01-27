@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+
+<suite name="Email Product Test">
+    <parameter name="email" value="vovajcd252@gmail.com"/>
+    <parameter name="password" value="Zcd123456"/>
+    <suite-files>
+        <suite-file path="antivirus-suite.xml"/>
+        <suite-file path="internet-security-suite.xml"/>
+        <suite-file path="password-manager-suite.xml"/>
+        <suite-file path="safe-kids-suite.xml"/>
+        <suite-file path="secure-connection-suite.xml"/>
+        <suite-file path="total-security-suite.xml"/>
+    </suite-files>
+</suite>
