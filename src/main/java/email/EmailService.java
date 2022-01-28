@@ -1,11 +1,16 @@
 package email;
 
-import config.ConfigReader;
-import model.User;
+import model.MessageInfo;
+import model.UserProductInfo;
+import org.testng.Assert;
+import testdata.TestDataReader;
+import utils.DefaultMessageInfoGenerator;
 import utils.EmailUtils;
 
 import java.io.IOException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.stream.Collectors;
 import javax.mail.Folder;
 import javax.mail.Message;
@@ -13,59 +18,38 @@ import javax.mail.MessagingException;
 import javax.mail.Store;
 
 public class EmailService {
-    private static final String WORD_FOR_SEARCHING = "Downloads";
 
-    public List<String> getTextBodiesFromEmail(User user, BoxName boxName) {
-        List<String> messages = new ArrayList<>();
-        try (Store store = SessionFactory.getInstance()
-                .getSession().getStore(ConfigReader.getProperty("mailStoreType"))) {
-            store.connect(ConfigReader.getProperty("mail.imap.host"), user.getEmail(), user.getPassword());
-            Folder inbox = store.getFolder(boxName.getBoxName());
-            inbox.open(Folder.READ_ONLY);
-            messages = Arrays
-                    .stream(inbox.getMessages())
-                    .sorted(sortByDate())
-                    .map(this::getBodyText)
+    public List<MessageInfo> getTextBodiesFromEmail(BoxName boxName) {
+        try (Store store = StoreFactory.getInstance().getStore();
+             Folder emailFolder = store.getFolder(boxName.getBoxName())) {
+            emailFolder.open(Folder.READ_ONLY);
+            return Arrays
+                    .stream(emailFolder.getMessages())
+                    .map(this::getMessageInfo)
+                    .filter(messageInfo ->
+                            messageInfo.containsContentInSubject(TestDataReader.getProperty("SUBJECT_BASE_WORD")))
+                    .sorted()
                     .collect(Collectors.toList());
-            inbox.close();
-            return messages;
         } catch (MessagingException e) {
-            return messages;
+            Assert.fail("No Emails", e);
+            return new ArrayList<>();
         }
     }
 
-    private String getBodyText(Message message) {
+    private MessageInfo getMessageInfo(Message message) {
         try {
-            return EmailUtils.getTextFromMessage(message);
-        } catch (MessagingException | IOException e) {
+            return new MessageInfo(EmailUtils.getTextFromMessage(message),
+                    message.getSubject(),
+                    message.getReceivedDate());
+        } catch (MessagingException e) {
             e.printStackTrace();
-            return "";
         }
-
+        return DefaultMessageInfoGenerator.getDefaultMessageInfo();
     }
 
-    private Comparator<Message> sortByDate() {
-        return (message1, message2) -> {
-            try {
-                return message2.getSentDate().compareTo(message1.getSentDate());
-            } catch (MessagingException e) {
-                e.printStackTrace();
-                return -1;
-            }
-        };
-    }
-
-    public static boolean checkEmailForContent(List<String> emails, User user) {
-        boolean found = false;
-        for (String bodyText : emails) {
-            bodyText = bodyText.toLowerCase();
-            if (bodyText.contains(user.getProductName().toLowerCase())
-                    && bodyText.contains(user.getOs().toLowerCase())
-                    && bodyText.contains(WORD_FOR_SEARCHING.toLowerCase())) {
-                found = true;
-                break;
-            }
-        }
-        return found;
+    public static boolean checkEmailsForContent(List<MessageInfo> emails, UserProductInfo userProductInfo) {
+        return emails
+                .stream()
+                .anyMatch(messageInfo -> messageInfo.containsProductInfo(userProductInfo));
     }
 }

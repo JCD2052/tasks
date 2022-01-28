@@ -10,17 +10,24 @@ import email.ContentType;
 import org.jsoup.Jsoup;
 
 public class EmailUtils {
-    public static String getTextFromMessage(Message message) throws MessagingException, IOException {
-        MimeMultipart mimeMultipartMessage = (MimeMultipart) message.getContent();
-        StringBuilder result = new StringBuilder();
-        for (int i = 0; i < mimeMultipartMessage.getCount(); i++) {
-            BodyPart bodyPart = mimeMultipartMessage.getBodyPart(i);
-            if (bodyPart.isMimeType(ContentType.HTML_CONTENT_TYPE)) {
-                result.append(Jsoup.parse((String) bodyPart.getContent()).text());
-            } else {
-                result.append(bodyPart.getContent());
+    public static String getTextFromMessage(Message message) {
+        try {
+            MimeMultipart mimeMultipartMessage = (MimeMultipart) message.getContent();
+            StringBuilder result = new StringBuilder();
+            for (int i = 0; i < mimeMultipartMessage.getCount(); i++) {
+                BodyPart bodyPart = mimeMultipartMessage.getBodyPart(i);
+                if (bodyPart.isMimeType(ContentType.HTML_CONTENT_TYPE)) {
+                    result.append(Jsoup.parse((String) bodyPart.getContent()).text());
+                } else {
+                    result.append(bodyPart.getContent());
+                }
             }
+            return result
+                    .toString()
+                    .toLowerCase();
+        } catch (MessagingException | IOException exception) {
+            exception.printStackTrace();
+            return "No info";
         }
-        return result.toString();
     }
 }

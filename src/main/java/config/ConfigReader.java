@@ -7,7 +7,7 @@ import java.util.Properties;
 public class ConfigReader {
 
     public static Properties getPropertiesContent() {
-        return PropertyReader.read("src/main/resources/email.host.properties");
+        return PropertyReader.read("src/main/java/config/email.host.config.properties");
     }
 
     public static String getProperty(String property) {

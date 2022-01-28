@@ -1,6 +1,7 @@
+import aquality.selenium.browser.AqualityServices;
 import email.BoxName;
 import email.EmailService;
-import model.User;
+import model.UserProductInfo;
 import org.testng.Assert;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
@@ -8,35 +9,38 @@ import pages.DownloadsPage;
 import pages.LicensePage;
 import pages.LoginPage;
 
-import java.util.List;
-
 public class EmailProductTest extends BaseTest {
     @Test
     @Parameters({"email", "password", "productName", "osName"})
-    public void emailProductTest(String email, String password, String productName, String osName) {
-        User user = User.builder()
+    public void sendEmailAboutProductTest(String email, String password, String productName, String osName) {
+        UserProductInfo userProductInfo = UserProductInfo.builder()
                 .email(email)
                 .password(password)
                 .productName(productName)
                 .os(osName)
                 .build();
+        Assert.assertNotNull(userProductInfo, "No info about Product.");
 
         LoginPage loginPage = new LoginPage();
         Assert.assertTrue(loginPage.waitForLoad(), "Login Page hasn't been loaded.");
 
-        loginPage.logIn(user);
+        loginPage.logIn(userProductInfo);
         LicensePage licensePage = new LicensePage();
         Assert.assertTrue(licensePage.waitForLoad(), "License Page hasn't been loaded.");
 
         DownloadsPage downloadsPage = licensePage.getHeaderForm().goToDownloads();
         Assert.assertTrue(downloadsPage.waitForLoad(), "Downloads Page hasn't been loaded.");
 
-        downloadsPage.selectOs(user);
-        downloadsPage.clickEmailInfoAboutProduct(user);
-        Assert.assertTrue(downloadsPage.checkIfOriginEmailIsCorrect(user), "Origin email is not correct.");
+        downloadsPage.selectOs(userProductInfo);
+        downloadsPage.clickEmailInfoAboutProduct(userProductInfo);
+        Assert.assertEquals(downloadsPage.getOriginEmail(),
+                "Origin email is not correct.");
 
-        downloadsPage.sendEmailWithProductInfo(user);
-        List<String> emails = new EmailService().getTextBodiesFromEmail(user, BoxName.INBOX);
-        Assert.assertTrue(EmailService.checkEmailForContent(emails, user), "Email with info hasn't been found");
+        downloadsPage.sendEmailWithProductInfo(userProductInfo);
+
+        Assert.assertTrue(AqualityServices.getConditionalWait().waitFor(() ->
+                        EmailService.checkEmailsForContent(
+                                new EmailService().getTextBodiesFromEmail(BoxName.INBOX), userProductInfo),
+                "Email with info hasn't been found"));
     }
 }

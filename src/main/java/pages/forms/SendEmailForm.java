@@ -10,6 +10,9 @@ public class SendEmailForm extends BasePage {
             .getButton(By.xpath("//button[contains(@data-at-selector, 'installer')]"), "Send Email");
     private final ITextBox txtEmail = getElementFactory()
             .getTextBox(By.xpath("//input[contains(@data-at-selector, 'email')]"), "Email");
+    private final IButton btnOk = getElementFactory()
+            .getButton(By.xpath("//button[contains(@data-at-selector, 'Ok')]"), "Ok");
+
 
     public SendEmailForm() {
         super(By.xpath("//div[contains(@class, 'modal') and contains(@class, 'body')]"), "Send Email Form");
@@ -24,6 +27,9 @@ public class SendEmailForm extends BasePage {
     }
 
     public void sendEmail() {
+        btnSendEmail.state().waitForClickable();
         btnSendEmail.click();
+        btnOk.state().waitForClickable();
+        btnOk.click();
     }
 }

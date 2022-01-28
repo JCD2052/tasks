@@ -2,7 +2,7 @@ package pages;
 
 import aquality.selenium.elements.interfaces.IButton;
 import aquality.selenium.elements.interfaces.ITextBox;
-import model.User;
+import model.UserProductInfo;
 import org.openqa.selenium.By;
 import pages.forms.CookieForm;
 
@@ -25,12 +25,12 @@ public class LoginPage extends MainPage {
         this.cookieForm = new CookieForm();
     }
 
-    public void logIn(User user) {
+    public void logIn(UserProductInfo userProductInfo) {
         if (cookieForm.waitForLoad()) {
             cookieForm.acceptCookies();
         }
-        textEmail.clearAndType(user.getEmail());
-        textPassword.clearAndType(user.getPassword());
+        textEmail.clearAndType(userProductInfo.getEmail());
+        textPassword.clearAndType(userProductInfo.getPassword());
         btnLogin.click();
     }
 }

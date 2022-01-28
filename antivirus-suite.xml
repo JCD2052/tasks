@@ -2,8 +2,6 @@
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
 
 <suite name="Anti-Virus Suite">
-<!--    <parameter name="email" value="vovajcd252@gmail.com"/>-->
-<!--    <parameter name="password" value="Zcd123456"/>-->
     <parameter name="productName" value="Anti-Virus"/>
     <test name="Anti-Virus Windows Test">
         <parameter name="osName" value="Windows"/>
