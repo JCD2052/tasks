@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+
+<suite name="Secure Connection Suite">
+    <parameter name="productName" value="Secure Connection"/>
+    <test name="Secure Connection Mac Test">
+        <parameter name="osName" value="Mac"/>
+        <classes>
+            <class name="EmailProductTest"/>
+        </classes>
+    </test>
+    <test name="Secure Connection Windows Test">
+        <parameter name="osName" value="Windows"/>
+        <classes>
+            <class name="EmailProductTest"/>
+        </classes>
+    </test>
+    <test name="Secure Connection iOS Test">
+        <parameter name="osName" value="iOS"/>
+        <classes>
+            <class name="EmailProductTest"/>
+        </classes>
+    </test>
+    <test name="Secure Connection Android Test">
+        <parameter name="osName" value="Android"/>
+        <classes>
+            <class name="EmailProductTest"/>
+        </classes>
+    </test>
+</suite>

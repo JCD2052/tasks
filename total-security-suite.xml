@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+
+<suite name="Total Security Suite">
+    <parameter name="productName" value="Total Security"/>
+    <test name="Total Security Windows Test">
+        <parameter name="osName" value="Windows"/>
+        <classes>
+            <class name="EmailProductTest"/>
+        </classes>
+    </test>
+</suite>

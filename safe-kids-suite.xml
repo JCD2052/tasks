@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+
+<suite name="Safe Kids Suite">
+    <parameter name="productName" value="Safe Kids"/>
+    <test name="Safe Kids Mac Test">
+        <parameter name="osName" value="Mac"/>
+        <classes>
+            <class name="EmailProductTest"/>
+        </classes>
+    </test>
+    <test name="Safe Kids Windows Test">
+        <parameter name="osName" value="Windows"/>
+        <classes>
+            <class name="EmailProductTest"/>
+        </classes>
+    </test>
+    <test name="Safe Kids iOS Test">
+        <parameter name="osName" value="iOS"/>
+        <classes>
+            <class name="EmailProductTest"/>
+        </classes>
+    </test>
+    <test name="Safe Kids Android Test">
+        <parameter name="osName" value="Android"/>
+        <classes>
+            <class name="EmailProductTest"/>
+        </classes>
+    </test>
+</suite>
