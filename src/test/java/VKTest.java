@@ -2,14 +2,15 @@ import api.models.likes.ResponseGetLikes;
 import api.service.LikesService;
 import api.service.PhotoService;
 import api.service.WallService;
-import aquality.selenium.browser.AqualityServices;
 import config.ConfigReader;
 import models.WallPostInfo;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
+import pages.FeedPage;
 import pages.LogIn;
 import pages.MyProfile;
+import pages.forms.LeftMenuItems;
 import pages.forms.Wall;
 import testdata.TestDataReader;
 import utils.ImageUtils;
@@ -20,12 +21,12 @@ import java.util.List;
 
 public class VKTest extends BaseTest {
 
-    @Test(enabled = false)
+    @Test
     public void testCase1() {
         Wall wallForm = myProfilePage.goToWall();
         int userID = wallForm.getUserID();
         String randomText = StringUtils.getRandomString(StringUtils
-                .stringToInt(new TestDataReader().get("random_string_length")));
+                .stringToInt(TestDataReader.get("random_string_length")));
         WallService wallService = new WallService();
         int postID = wallService.createPost(randomText, "").getPostID();
         Assert.assertTrue(wallForm.isPostExistOnPage(postID),
@@ -38,11 +39,11 @@ public class VKTest extends BaseTest {
         Assert.assertEquals(commentInfo.getAuthorID(), userID,
                 "Author doesn't match");
 
-        String testImagePath = new TestDataReader().get("test_image_path");
+        String testImagePath = TestDataReader.get("test_image_path");
         String photoAttachment = new PhotoService()
                 .getUploadedPhotoAsAttachment(testImagePath);
         randomText = StringUtils.getRandomString(StringUtils
-                .stringToInt(new TestDataReader().get("random_string_length")));
+                .stringToInt(TestDataReader.get("random_string_length")));
         Assert.assertEquals(
                 wallService.editPost(postID, randomText, photoAttachment), 1);
 
@@ -59,7 +60,7 @@ public class VKTest extends BaseTest {
                 "Message doesn't match");
 
         randomText = StringUtils.getRandomString(StringUtils
-                .stringToInt(new TestDataReader().get("random_string_length")));
+                .stringToInt(TestDataReader.get("random_string_length")));
         int commentID = wallService.createCommentToPost(postID, randomText, "");
         wallForm.clickShowNextComment(postID);
         commentInfo = wallForm.getPostCommentInfo(commentID, postID);
@@ -90,7 +91,7 @@ public class VKTest extends BaseTest {
         Wall wallForm = myProfilePage.goToWall();
         int userId = wallForm.getUserID();
         String randomText = StringUtils.getRandomString(StringUtils
-                .stringToInt(new TestDataReader().get("random_string_length")));
+                .stringToInt(TestDataReader.get("random_string_length")));
         WallService wallService = new WallService();
         int postID = wallService.createPost(randomText, "").getPostID();
         WallPostInfo postInfo = WallPostInfo.builder()
@@ -107,19 +108,27 @@ public class VKTest extends BaseTest {
 
         wallForm.clickLikePost(postID);
         myProfilePage.goToHeader().goToProfile().logOut();
-        WebDriverUtils.goToPage(new ConfigReader().get("base_url"));
-        WebDriverUtils.goToPage(new ConfigReader().get("base_url"));
+        WebDriverUtils.goToPage(ConfigReader.get("base_url"));
 
         LogIn logInPage = new LogIn();
         Assert.assertTrue(logInPage.isPageLoaded(),
                 "Login Page is not opened");
 
-        logInPage.logIn(new TestDataReader().get("username_user2"),
-                new TestDataReader().get("password_user2"));
-        WebDriverUtils.goToPage(user1PageUrl);
-        WebDriverUtils.goToPage(user1PageUrl);
+        logInPage.logIn(TestDataReader.get("username_user2"),
+                TestDataReader.get("password_user2"));
+        FeedPage feedPage = new FeedPage();
+        Assert.assertTrue(feedPage.isPageLoaded(),
+                "Feed Page is not opened.");
+
+        feedPage.goToLeftMenu().selectMenuItem(LeftMenuItems.MY_PROFILE);
         myProfilePage = new MyProfile();
 
+        Assert.assertTrue(myProfilePage.isPageLoaded(),
+                "My Page is not opened.");
+        wallForm = myProfilePage.goToWall();
+        int user2Id = wallForm.getUserID();
+        WebDriverUtils.goToPage(user1PageUrl);
+        myProfilePage = new MyProfile();
         Assert.assertTrue(myProfilePage.isPageLoaded(),
                 "My Page is not opened.");
 
@@ -138,17 +147,17 @@ public class VKTest extends BaseTest {
         Assert.assertTrue(likes.contains(userId),
                 "No likes from User1");
 
-        Assert.assertTrue(likes.contains(102212758),
+        Assert.assertTrue(likes.contains(user2Id),
                 "No likes from User2");
     }
 
-    @Test(enabled = false)
+    @Test
     public void testCase3() {
         String user1PageUrl = WebDriverUtils.getCurrentUrl();
         Wall wallForm = myProfilePage.goToWall();
         int userId = wallForm.getUserID();
         String randomText = StringUtils.getRandomString(StringUtils
-                .stringToInt(new TestDataReader().get("random_string_length")));
+                .stringToInt(TestDataReader.get("random_string_length")));
         WallService wallService = new WallService();
         int postID = wallService.createPost(randomText, "").getPostID();
         WallPostInfo postInfo = WallPostInfo.builder()
@@ -164,7 +173,7 @@ public class VKTest extends BaseTest {
                 "No info about post");
 
         myProfilePage.goToHeader().goToProfile().logOut();
-        WebDriverUtils.goToPage(new ConfigReader().get("base_url"));
+        WebDriverUtils.goToPage(ConfigReader.get("base_url"));
         WebDriverUtils.goToPage(user1PageUrl);
         myProfilePage = new MyProfile();
 

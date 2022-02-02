@@ -2,10 +2,10 @@ package config;
 
 import utils.PropertyReader;
 
-public class ConfigReader extends PropertyReader {
-
-    @Override
-    protected String propertyPath() {
-        return "src/main/java/config/config.properties";
+public class ConfigReader {
+    public static String get(String property) {
+        return PropertyReader
+                .read("src/main/java/config/config.properties")
+                .getProperty(property);
     }
 }

@@ -17,10 +17,10 @@ public abstract class BaseService {
     protected <O, T> T getBaseRequest(APIMethods apiMethod, O object, Class<T> classType) {
         return given()
                 .spec(new RequestSpecBuilder()
-                        .setBaseUri(new ConfigReader().get("base_api_url"))
+                        .setBaseUri(ConfigReader.get("base_api_url"))
                         .setBasePath(getBasePath().getRoute() + "." + apiMethod.getApiMethod())
-                        .addQueryParam("access_token", new TestDataReader().get("token"))
-                        .addQueryParam("v", new ConfigReader().get("api_version"))
+                        .addQueryParam("access_token", TestDataReader.get("token"))
+                        .addQueryParam("v", ConfigReader.get("api_version"))
                         .setContentType(ContentType.JSON)
                         .addParams(checkRequestObject(object))
                         .build())
