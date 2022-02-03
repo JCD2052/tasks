@@ -1,4 +1,4 @@
-package api.models.photo;
+package api.models.upload;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class ResponseUploadPhoto {
+public class ResponseUpload {
     @JsonProperty("upload_url")
     private String uploadURL;
     @JsonProperty("album_id")

@@ -15,13 +15,13 @@ public abstract class BaseTest {
 
     @BeforeMethod
     protected void setup() {
-        WebDriverUtils.goToPage(new ConfigReader().get("base_url"));
+        WebDriverUtils.goToPage(ConfigReader.get("base_url"));
         LogIn logInPage = new LogIn();
         Assert.assertTrue(logInPage.isPageLoaded(),
                 "Login Page is not opened");
 
-        logInPage.logIn(new TestDataReader().get("username_user1"),
-                new TestDataReader().get("password_user1"));
+        logInPage.logIn(TestDataReader.get("username_user1"),
+                 TestDataReader.get("password_user1"));
         FeedPage feedPage = new FeedPage();
         Assert.assertTrue(feedPage.isPageLoaded(),
                 "Feed Page is not opened.");

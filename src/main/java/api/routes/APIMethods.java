@@ -1,14 +1,16 @@
 package api.routes;
 
 public enum APIMethods {
-    WALL_GET("get"),
-    WALL_POST("post"),
-    WALL_EDIT("edit"),
-    WALL_DELETE("delete"),
-    WALL_CREATE_REPLY("createComment"),
-    PHOTOS_UPLOAD("getWallUploadServer"),
-    PHOTOS_SAVE("saveWallPhoto"),
-    GET_LIKES("getList");
+    WALL_GET("wall.get"),
+    WALL_POST("wall.post"),
+    WALL_EDIT("wall.edit"),
+    WALL_DELETE("wall.delete"),
+    WALL_CREATE_REPLY("wall.createComment"),
+    PHOTOS_UPLOAD("photos.getWallUploadServer"),
+    PHOTOS_SAVE("photos.saveWallPhoto"),
+    GET_LIKES("likes.getList"),
+    DOCS_UPLOAD("docs.getWallUploadServer"),
+    DOCS_SAVE("docs.save");
 
     private final String apiMethod;
 

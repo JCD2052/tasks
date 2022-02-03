@@ -191,4 +191,23 @@ public class VKTest extends BaseTest {
         Assert.assertFalse(myProfilePage.goToLeftMenu().isLogIn(),
                 "User is still logged in.");
     }
+
+    @Test
+    public void testCase5() {
+        String testImagePath = TestDataReader.get("random_string_length");
+        String randomText = StringUtils.getRandomString(StringUtils
+                .stringToInt(testImagePath));
+        String photoAttachment = new PhotoService()
+                .getUploadedPhotoAsAttachment(TestDataReader.get("test_image_path"));
+        WallService wallService = new WallService();
+        int postId = wallService.createPost(randomText, photoAttachment).getPostID();
+        Wall wall = myProfilePage.goToWall();
+        Assert.assertTrue(wall.isImageExist(postId),
+                "Image is not existed.");
+
+        new SoftAssert().assertTrue(
+                ImageUtils.checkImages(
+                        wall.getImageLink(postId), testImagePath),
+                "Images are not equal");
+    }
 }

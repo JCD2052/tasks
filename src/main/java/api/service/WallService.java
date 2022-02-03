@@ -1,8 +1,13 @@
 package api.service;
 
-import api.models.wall.*;
+import api.models.wall.RequestCreateComment;
+import api.models.wall.RequestDeletePost;
+import api.models.wall.RequestEditPost;
+import api.models.wall.RequestWallPost;
+import api.models.wall.ResponseCreateComment;
+import api.models.wall.ResponseGetPosts;
+import api.models.wall.ResponseWallPost;
 import api.routes.APIMethods;
-import api.routes.Endpoints;
 
 public class WallService extends BaseService {
 
@@ -42,10 +47,5 @@ public class WallService extends BaseService {
                 .postID(postID)
                 .build();
         return getBaseRequest(APIMethods.WALL_DELETE, deletePostRequest, Integer.class);
-    }
-
-    @Override
-    protected Endpoints getBasePath() {
-        return Endpoints.WALL;
     }
 }
