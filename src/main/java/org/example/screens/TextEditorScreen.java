@@ -2,10 +2,9 @@ package org.example.screens;
 
 import aquality.appium.mobile.elements.interfaces.IButton;
 import aquality.appium.mobile.elements.interfaces.ITextBox;
-import aquality.appium.mobile.screens.Screen;
 import org.openqa.selenium.By;
 
-public class TextEditorScreen extends Screen {
+public class TextEditorScreen extends BaseScreen {
     private final ITextBox editorTextBox = getElementFactory()
             .getTextBox(By.className("android.widget.EditText"), "Editor Text box");
 
