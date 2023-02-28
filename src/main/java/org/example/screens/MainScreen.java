@@ -3,9 +3,11 @@ package org.example.screens;
 import aquality.appium.mobile.elements.interfaces.IButton;
 import aquality.appium.mobile.elements.interfaces.ILabel;
 import aquality.appium.mobile.elements.interfaces.ITextBox;
+import io.appium.java_client.android.nativekey.AndroidKey;
 import org.example.screens.categories.AddFileCategory;
 import org.example.screens.categories.Category;
 import org.example.screens.categories.ContextMenuCategory;
+import org.example.utils.ControlUtils;
 import org.openqa.selenium.By;
 
 import static io.appium.java_client.AppiumBy.accessibilityId;
@@ -17,8 +19,10 @@ public class MainScreen extends BaseScreen {
                     "Loading spinner");
     private final IButton addFileButton = getElementFactory()
             .getButton(ADD_OR_UPLOAD_LOCATOR, "Add or upload button");
+    private final IButton searchArea = getElementFactory()
+            .getButton(By.id("com.nextcloud.client:id/search_text"), "Search Area");
     private final ITextBox searchTextBox = getElementFactory()
-            .getTextBox(By.id("com.nextcloud.client:id/search_text"), "Search Text box");
+            .getTextBox(By.id("com.nextcloud.client:id/search_src_text"), "Search Text box");
     private final IButton dragHandler = getElementFactory()
             .getButton(accessibilityId("Drag handle"), "Drag Handler");
     private static final By ADD_OR_UPLOAD_LOCATOR = accessibilityId("Add or upload");
@@ -32,8 +36,9 @@ public class MainScreen extends BaseScreen {
     }
 
     public void searchForContent(String searchValue) {
-        searchTextBox.click();
+        searchArea.click();
         searchTextBox.clearAndType(searchValue);
+        ControlUtils.pressKeyOnKeyboard(AndroidKey.ENTER);
     }
 
     public boolean waitUntilSpinnerGone() {

@@ -2,14 +2,14 @@ import aquality.appium.mobile.application.AqualityServices;
 import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeTest;
 
-public class BaseTest {
+public abstract class BaseTest {
     @BeforeTest
-    public void setup() {
+    protected void setup() {
         AqualityServices.getApplication();
     }
 
     @AfterTest
-    public void teardown() {
+    protected void teardown() {
         AqualityServices.getApplication().quit();
     }
 }

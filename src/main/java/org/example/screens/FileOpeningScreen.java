@@ -14,11 +14,11 @@ public class FileOpeningScreen extends BaseScreen {
         super(By.id("com.nextcloud.client:id/thumbnail"), "File loading screen");
     }
 
-    public boolean isFilenameMatched(String filename) {
-        return filenameLabel.getText().contains(filename);
+    public String getFilename() { //need without extension
+        return filenameLabel.getText();
     }
 
     public boolean waitUntilSpinnerDisappears() {
-        return progressBar.state().waitForNotExist();
+        return progressBar.state().waitForNotEnabled();
     }
 }
