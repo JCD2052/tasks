@@ -1,3 +1,5 @@
+import org.example.config.PropertyConfig;
+import org.example.config.TestDataConfig;
 import org.example.screens.FileOpeningScreen;
 import org.example.screens.MainScreen;
 import org.example.screens.SearchScreen;
@@ -15,18 +17,19 @@ public class NextCloudTest {
     private final CreateFileForm createFileForm = new CreateFileForm();
     private final FileOpeningScreen fileOpeningScreen = new FileOpeningScreen();
     private final TextEditorScreen textEditorScreen = new TextEditorScreen();
+    private final TestDataConfig testData = PropertyConfig.TEST_DATA_CONFIG.getConfig();
 
     @Test
     public void createAndDeleteFileTest() {
-        String randomFilename = RandomUtils.getRandomString(15);
-        String randomText = RandomUtils.getRandomString(15);
+        String randomFilename = RandomUtils.getRandomString(testData.getRandomLength());
+        String randomText = RandomUtils.getRandomString(testData.getRandomLength());
         createFileAndDelete(randomFilename, randomText);
     }
 
     @Test
     public void createFileDeleteAndReload() {
-        String randomFilename = RandomUtils.getRandomString(15);
-        String randomText = RandomUtils.getRandomString(15);
+        String randomFilename = RandomUtils.getRandomString(testData.getRandomLength());
+        String randomText = RandomUtils.getRandomString(testData.getRandomLength());
         createFileAndDelete(randomFilename, randomText);
         Assert.assertFalse(mainScreen.isFileExits(randomFilename));
         //reload and check
@@ -35,8 +38,8 @@ public class NextCloudTest {
 
     @Test
     public void openFileCheckContentAndCloseFileTest() {
-        String filename = "";
-        String testText = "";
+        String filename = testData.getFilename();
+        String testText = testData.getFileText();
         Assert.assertTrue(mainScreen.waitUntilSpinnerGone(), "Main Screen is not loaded.");
         mainScreen.openFile(filename);
 
@@ -49,7 +52,7 @@ public class NextCloudTest {
 
     @Test
     public void searchFileTest() {
-        String filename = "";
+        String filename = testData.getFilename();
         Assert.assertTrue(mainScreen.waitUntilSpinnerGone(), "Main Screen is not loaded.");
         mainScreen.searchForContent(filename);
         SearchScreen searchScreen = new SearchScreen();
