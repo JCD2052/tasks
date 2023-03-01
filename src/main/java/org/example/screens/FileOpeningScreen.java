@@ -1,7 +1,10 @@
 package org.example.screens;
 
 import aquality.appium.mobile.elements.interfaces.ILabel;
+import org.example.utils.StringUtils;
 import org.openqa.selenium.By;
+
+import java.time.Duration;
 
 public class FileOpeningScreen extends BaseScreen {
 
@@ -14,11 +17,11 @@ public class FileOpeningScreen extends BaseScreen {
         super(By.id("com.nextcloud.client:id/thumbnail"), "File loading screen");
     }
 
-    public String getFilename() { //need without extension
-        return filenameLabel.getText();
+    public String getFilename() {
+        return StringUtils.extractFilenameWithoutExtension(filenameLabel.getText());
     }
 
-    public boolean waitUntilSpinnerDisappears() {
-        return progressBar.state().waitForNotEnabled();
+    public boolean waitUntilSpinnerDisappears(int timeout) {
+        return progressBar.state().waitForNotExist(Duration.ofSeconds(timeout));
     }
 }

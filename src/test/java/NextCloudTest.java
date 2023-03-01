@@ -12,7 +12,7 @@ import org.example.utils.RandomUtils;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
-public class NextCloudTest {
+public class NextCloudTest extends BaseTest {
     private final MainScreen mainScreen = new MainScreen();
     private final CreateFileForm createFileForm = new CreateFileForm();
     private final FileOpeningScreen fileOpeningScreen = new FileOpeningScreen();
@@ -27,12 +27,13 @@ public class NextCloudTest {
     }
 
     @Test
-    public void createFileDeleteAndReload() {
+    public void createFileDeleteAndReloadTest() {
         String randomFilename = RandomUtils.getRandomString(testData.getRandomLength());
         String randomText = RandomUtils.getRandomString(testData.getRandomLength());
         createFileAndDelete(randomFilename, randomText);
+        Assert.assertTrue(mainScreen.waitUntilSpinnerGone(), "Main Screen is not loaded.");
         Assert.assertFalse(mainScreen.isFileExits(randomFilename));
-        //reload and check
+        mainScreen.reloadScreen();
         Assert.assertFalse(mainScreen.isFileExits(randomFilename));
     }
 
@@ -45,8 +46,14 @@ public class NextCloudTest {
 
         Assert.assertTrue(fileOpeningScreen.waitForPageLoading(),
                 "File Opening screen is not loaded");
-        String text = textEditorScreen.getTextFromEditor();
-        Assert.assertEquals(text, testText, "Texts are not matched");
+        Assert.assertTrue(fileOpeningScreen.waitUntilSpinnerDisappears(
+                testData.getTimeoutForOpening()), "File is not opened");
+        Assert.assertTrue(textEditorScreen.waitForPageLoading(),
+                "Editor Screen is not opened");
+
+        String textFromEditor = textEditorScreen.getTextFromEditor();
+
+        Assert.assertEquals(textFromEditor, testText, "Texts are not matched");
         textEditorScreen.closeEditor();
     }
 
@@ -55,8 +62,9 @@ public class NextCloudTest {
         String filename = testData.getFilename();
         Assert.assertTrue(mainScreen.waitUntilSpinnerGone(), "Main Screen is not loaded.");
         mainScreen.searchForContent(filename);
+
         SearchScreen searchScreen = new SearchScreen();
-        Assert.assertTrue(searchScreen.isFileSearched(filename),
+        Assert.assertTrue(searchScreen.isFileSearched(filename, testData.getTimeoutForSearch()),
                 String.format("File %s was not found", filename));
     }
 
@@ -71,8 +79,8 @@ public class NextCloudTest {
         Assert.assertTrue(fileOpeningScreen.waitForPageLoading(),
                 "File Opening screen is not loaded");
         Assert.assertEquals(fileName, fileOpeningScreen.getFilename());
-        Assert.assertTrue(fileOpeningScreen.waitUntilSpinnerDisappears(),
-                "File is not opened");
+        Assert.assertTrue(fileOpeningScreen.waitUntilSpinnerDisappears(
+                testData.getTimeoutForOpening()), "File is not opened");
 
         Assert.assertTrue(textEditorScreen.waitForPageLoading(),
                 "Editor Screen is not opened");

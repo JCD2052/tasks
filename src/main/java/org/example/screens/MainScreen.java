@@ -1,6 +1,7 @@
 package org.example.screens;
 
 import aquality.appium.mobile.elements.interfaces.IButton;
+import aquality.appium.mobile.elements.interfaces.IElement;
 import aquality.appium.mobile.elements.interfaces.ILabel;
 import aquality.appium.mobile.elements.interfaces.ITextBox;
 import io.appium.java_client.android.nativekey.AndroidKey;
@@ -9,6 +10,8 @@ import org.example.screens.categories.Category;
 import org.example.screens.categories.ContextMenuCategory;
 import org.example.utils.ControlUtils;
 import org.openqa.selenium.By;
+import org.openqa.selenium.Dimension;
+import org.openqa.selenium.Point;
 
 import static io.appium.java_client.AppiumBy.accessibilityId;
 
@@ -37,12 +40,26 @@ public class MainScreen extends BaseScreen {
 
     public void searchForContent(String searchValue) {
         searchArea.click();
-        searchTextBox.clearAndType(searchValue);
+        searchTextBox.state().waitForExist();
+        searchTextBox.clear();
+        searchTextBox.type(searchValue);
         ControlUtils.pressKeyOnKeyboard(AndroidKey.ENTER);
     }
 
+    public void reloadScreen() {
+        IElement contentElement = getElementFactory()
+                .getLabel(accessibilityId("Listed layout"), "Content");
+        Dimension screenSizes = ControlUtils.getScreenSize();
+        int centerOfScreenWith = screenSizes.getWidth() / 2;
+        contentElement.getTouchActions().swipe(new Point(centerOfScreenWith,
+                screenSizes.getHeight()));
+        this.state().waitForEnabled();
+    }
+
     public boolean waitUntilSpinnerGone() {
-        return spinner.state().waitForNotExist();
+        spinner.state().waitForNotExist();
+        addFileButton.state().waitForClickable();
+        return addFileButton.state().isClickable();
     }
 
     public boolean isFileExits(String filename) {

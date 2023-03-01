@@ -12,7 +12,8 @@ public class CreateFileForm extends BaseForm {
     }
 
     public void createFile(String fileName) {
-        filenameTextInput.clearAndType(fileName);
+        filenameTextInput.clear();
+        filenameTextInput.sendKeys(fileName);
         rightChoice.click();
     }
 }

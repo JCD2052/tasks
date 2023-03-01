@@ -23,7 +23,7 @@ public class TextEditorScreen extends BaseScreen {
     }
 
     public String getTextFromEditor() {
-        return editorTextBox.getText();
+        return editorTextBox.getText().trim();
     }
 
     public void closeEditor() {
