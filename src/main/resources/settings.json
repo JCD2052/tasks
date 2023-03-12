@@ -1,0 +1,57 @@
+{
+  "platformName": "android",
+  "isRemote": true,
+  "remoteConnectionUrl": "http://127.0.0.1:4723/wd/hub",
+  "driverSettings": {
+    "android": {
+      "deviceKey": "Android_Emulator",
+      "applicationPath": "src/main/resources/application/Kickstarter.apk",
+      "capabilities": {
+        "platformName": "Android",
+        "automationName": "UiAutomator2",
+        "adbExecTimeout": 60000,
+        "androidInstallTimeout": 120000,
+        "uiautomator2ServerInstallTimeout": 120000
+      }
+    },
+    "ios": {
+      "deviceKey": "<KEY_OF_IOS_DEVICE_FROM_DEVICES_JSON>",
+      "applicationPath": "./src/test/resources/apps/TestApp.app.zip",
+      "capabilities": {
+        "platformName": "iOS",
+        "automationName": "XCUITest"
+      }
+    }
+  },
+  "localServiceSettings": {
+    "arguments": {
+      "--allow-insecure": "chromedriver_autodownload"
+    },
+    "capabilities": {
+    }
+  },
+  "timeouts": {
+    "timeoutImplicit": 0,
+    "timeoutCondition": 15,
+    "timeoutPollingInterval": 300,
+    "timeoutCommand": 120
+  },
+  "retry": {
+    "number": 2,
+    "pollingInterval": 300
+  },
+  "logger": {
+    "language": "en"
+  },
+  "elementCache": {
+    "isEnabled": true
+  },
+  "touchActions": {
+    "swipe": {
+      "duration": 1,
+      "retries": 5,
+      "verticalOffset": 0.2,
+      "horizontalOffset": 0.5
+    }
+  }
+}
