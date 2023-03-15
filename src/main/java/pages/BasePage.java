@@ -2,28 +2,28 @@ package pages;
 
 import aquality.selenium.forms.Form;
 import org.openqa.selenium.By;
-import pages.menus.FooterMenu;
-import pages.menus.HeaderMenu;
+import pages.forms.FooterForm;
+import pages.forms.HeaderForm;
 
 public abstract class BasePage extends Form {
-    private final FooterMenu footerMenu;
-    private final HeaderMenu headerMenu;
+    private final FooterForm footerForm;
+    private final HeaderForm headerForm;
 
     protected BasePage(By locator, String name) {
         super(locator, name);
-        this.footerMenu = new FooterMenu();
-        this.headerMenu = new HeaderMenu();
+        this.footerForm = new FooterForm();
+        this.headerForm = new HeaderForm();
     }
 
     public boolean waitForLoad() {
         return this.state().waitForDisplayed();
     }
 
-    public FooterMenu getFooterMenu() {
-        return footerMenu;
+    public FooterForm getFooterMenu() {
+        return footerForm;
     }
 
-    public HeaderMenu getHeaderMenu() {
-        return headerMenu;
+    public HeaderForm getHeaderMenu() {
+        return headerForm;
     }
 }

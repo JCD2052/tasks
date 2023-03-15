@@ -5,6 +5,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import org.apache.commons.lang3.builder.EqualsExclude;
 
 @Data
 @Builder
@@ -12,7 +13,9 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @EqualsAndHashCode
 public class CarTrimInfo {
-    private String style;
+    @EqualsExclude
+    private String trimName;
+    private String drivetrainType;
+    private int seatsCount;
     private String engine;
-    private String transmission;
 }
