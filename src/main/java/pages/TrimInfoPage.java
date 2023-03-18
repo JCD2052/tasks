@@ -25,7 +25,7 @@ public class TrimInfoPage extends BasePage {
     }
 
     public int getSeatsCount() {
-        return StringUtils.stringToIntWithRemoving(seatsCountLabel.getText());
+        return StringUtils.extractNumbersFromStringAndReturnInt(seatsCountLabel.getText());
     }
 
     public String getEngineInfo() {

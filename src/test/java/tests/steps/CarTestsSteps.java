@@ -26,6 +26,13 @@ public class CarTestsSteps {
                 randomSelectInfo.getYear(), carTrimInfo.get());
     }
 
+    public static CarTrimInfo getCarTrimInfoByPosition(int position) {
+        carInfoPage.selectTrimByPosition(position);
+        TrimInfoPage trimInfoPage = new TrimInfoPage();
+        return new CarTrimInfo(trimInfoPage.getDriveTrainType(),
+                trimInfoPage.getSeatsCount(), trimInfoPage.getEngineInfo());
+    }
+
     public static void assertCarTrimInfo(CarTrimInfo firstTrimInfo, CarTrimInfo secondTrimInfo) {
         Assert.assertEquals(firstTrimInfo.getDrivetrainType(), secondTrimInfo.getDrivetrainType(),
                 "Drivetrains are not matched.");
@@ -40,11 +47,7 @@ public class CarTestsSteps {
         if (!carInfoPage.checkTrimAvailability()) {
             return Optional.empty();
         }
-        String trimName = carInfoPage.getTrimNameByPosition(position);
-        carInfoPage.selectTrimByPosition(position);
-        TrimInfoPage trimInfoPage = new TrimInfoPage();
-        CarTrimInfo carTrimInfo = new CarTrimInfo(trimName, trimInfoPage.getDriveTrainType(),
-                trimInfoPage.getSeatsCount(), trimInfoPage.getEngineInfo());
+        CarTrimInfo carTrimInfo = getCarTrimInfoByPosition(position);
         return Optional.of(carTrimInfo);
     }
 

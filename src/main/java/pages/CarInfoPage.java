@@ -1,13 +1,17 @@
 package pages;
 
 import aquality.selenium.elements.ElementType;
+import aquality.selenium.elements.interfaces.ILabel;
 import aquality.selenium.elements.interfaces.ILink;
 import org.openqa.selenium.By;
+import utils.StringUtils;
 
 import java.util.List;
 
 public class CarInfoPage extends BasePage {
     private static final String TRIM_LIST_LOCATOR = "//ul[contains(@class,'trim')]//li//a";
+    private static final String TRIM_PRICE_LOCATOR = "//following-sibling::p";
+
     public CarInfoPage() {
         super(By.xpath("//div[@class  = 'header-container']"), "Car Page");
     }
@@ -18,6 +22,13 @@ public class CarInfoPage extends BasePage {
 
     public void selectTrimByPosition(int position) {
         getTrimByPosition(position).click();
+    }
+
+    public int getTrimPrice(int position) {
+        String priceString = getTrimByPosition(position)
+                .findChildElement(By.xpath(TRIM_PRICE_LOCATOR), ILabel.class)
+                .getText();
+        return StringUtils.extractNumbersFromStringAndReturnInt(priceString);
     }
 
     public String getTrimNameByPosition(int position) {

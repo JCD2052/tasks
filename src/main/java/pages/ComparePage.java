@@ -19,6 +19,7 @@ public class ComparePage extends BasePage {
         for (int i = 0; i < cars.length; i++) {
             new AddCarToCompareCardForm(i + 1).addCarToCompare(cars[i]);
         }
+        btnCompare.state().waitForClickable();
         btnCompare.click();
     }
 }
