@@ -12,8 +12,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @EqualsAndHashCode
 public class CarInfo {
-    private String maker;
-    private String model;
-    private String year;
+    private BaseCarInfo baseCarInfo;
     private CarTrimInfo trimInfo;
 }

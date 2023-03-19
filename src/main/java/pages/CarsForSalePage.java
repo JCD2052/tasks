@@ -3,7 +3,7 @@ package pages;
 import aquality.selenium.elements.interfaces.IButton;
 import aquality.selenium.elements.interfaces.IComboBox;
 import aquality.selenium.elements.interfaces.ITextBox;
-import models.SearchInfo;
+import models.pagemodels.SearchInfo;
 import org.openqa.selenium.By;
 
 public class CarsForSalePage extends BasePage {

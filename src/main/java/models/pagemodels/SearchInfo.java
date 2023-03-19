@@ -1,4 +1,4 @@
-package models;
+package models.pagemodels;
 
 public class SearchInfo {
     private final String maker;

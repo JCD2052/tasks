@@ -1,7 +1,7 @@
 package pages;
 
 import aquality.selenium.elements.interfaces.ILabel;
-import models.CarCard;
+import models.pagemodels.CarCard;
 import org.openqa.selenium.By;
 import pages.forms.FilterMenu;
 import utils.StringUtils;

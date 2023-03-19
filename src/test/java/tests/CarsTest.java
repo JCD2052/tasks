@@ -1,8 +1,8 @@
 package tests;
 
+import models.BaseCarInfo;
 import models.CarInfo;
-import models.SearchInfo;
-import models.SelectInfo;
+import models.pagemodels.SearchInfo;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 import pages.CarInfoPage;
@@ -12,7 +12,6 @@ import pages.HomePage;
 import pages.ResearchPage;
 import pages.CompareResultPage;
 import pages.SearchResultPage;
-import pages.TrimInfoPage;
 import tests.steps.CarTestsSteps;
 
 public class CarsTest extends BaseTest {
@@ -71,32 +70,30 @@ public class CarsTest extends BaseTest {
         Assert.assertTrue(researchPage.waitForLoad(),
                 "Research Page hasn't been loaded.");
 
-        SelectInfo selectInfo = new SelectInfo("", "", "");
-        researchPage.selectBaseCarInfo(selectInfo);
+        BaseCarInfo baseCarInfo = new BaseCarInfo("Volkswagen", "Passat", "2016");
+        researchPage.selectBaseCarInfo(baseCarInfo);
         Assert.assertTrue(carInfoPage.waitForLoad(), "Car info Page hasn't been loaded");
         String trimName = carInfoPage.getTrimNameByPosition(trimPosition);
-        int trimPrice = carInfoPage.getTrimPrice(trimPosition);
-        carInfoPage.selectTrimByPosition(trimPosition);
-        TrimInfoPage trimInfoPage = new TrimInfoPage();
-        Assert.assertTrue(trimInfoPage.waitForLoad(), "Trim info Page hasn't been loaded");
-        researchPage.getHeaderMenu().selectCarsForSalesPageFromMenu();
+        int newCarPrice = carInfoPage.getTrimPrice(trimPosition);
+        carInfoPage.getHeaderMenu().selectCarsForSalesPageFromMenu();
 
         CarsForSalePage carsForSalePage = new CarsForSalePage();
         Assert.assertTrue(carsForSalePage.waitForLoad(),
                 "Cars for sale page hasn't been loaded");
-        SearchInfo searchInfo = new SearchInfo("", "", "",
-                "", "", "");
+        SearchInfo searchInfo = new SearchInfo(baseCarInfo.getMaker(), baseCarInfo.getModel(),
+                "Used", "10001", "20 miles", "No max price");
         carsForSalePage.search(searchInfo);
         SearchResultPage searchResultPage = new SearchResultPage();
         Assert.assertTrue(searchResultPage.waitForLoad(),
                 "Search Result Page hasn't been loaded");
 
-        searchResultPage.getFilterMenu().selectMaxYear(selectInfo.getYear());
-        searchResultPage.getFilterMenu().selectMinYear(selectInfo.getYear());
+        searchResultPage.getFilterMenu().selectMaxYear(baseCarInfo.getYear());
         searchResultPage.getFilterMenu().selectTrim(trimName);
 
         Assert.assertTrue(searchResultPage.isContentFound(), "No cards found.");
-        int carPrice = searchResultPage.getFirstCard().getPrice();
-        Assert.assertEquals(carPrice, trimPrice, "Prices are not matched.");
+        int usedCarPrice = searchResultPage.getFirstCard().getPrice();
+        Assert.assertTrue(usedCarPrice < newCarPrice,
+                String.format("New car price %d should be greater than use car price %d",
+                        newCarPrice, usedCarPrice));
     }
 }

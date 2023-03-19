@@ -4,6 +4,7 @@ import aquality.selenium.browser.AqualityServices;
 import aquality.selenium.elements.interfaces.ILabel;
 import aquality.selenium.elements.interfaces.ILink;
 import aquality.selenium.forms.Form;
+import models.BaseCarInfo;
 import models.CarInfo;
 import models.CarTrimInfo;
 import org.openqa.selenium.By;
@@ -12,7 +13,6 @@ import utils.StringUtils;
 public class CompareCarCardForm extends Form {
     private static final String CAR_NAME_LINK_LOCATOR_TEMPLATE = "(//a[@data-linkname = 'research-mmy'])[%d]";
     private static final String BASE_LOCATOR_TEMPLATE = "(//td[@data-qa = '%s-data'])[%d]//div[@class = 'data-point']";
-    private static final String NO_TRIM_INFO = "No trim name info.";
     private static final String CAR_LINK = "https://www.cars.com/research/";
     private final ILink carNameLink;
     private final ILabel driveTrainLabel;
@@ -41,8 +41,8 @@ public class CompareCarCardForm extends Form {
         String engine = String.format("%s, %s", getHorsePower(), getEngine());
         String driveTrain = getDriveTrain();
         int seats = getSeatsCount();
-        CarTrimInfo carTrimInfo = new CarTrimInfo(NO_TRIM_INFO, driveTrain, seats, engine);
-        return new CarInfo(maker, model, year, carTrimInfo);
+        CarTrimInfo carTrimInfo = new CarTrimInfo(driveTrain, seats, engine);
+        return new CarInfo(new BaseCarInfo(maker, model, year), carTrimInfo);
     }
 
     private String getBaseCarInfo() {

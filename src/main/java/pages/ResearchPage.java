@@ -2,7 +2,7 @@ package pages;
 
 import aquality.selenium.elements.interfaces.IButton;
 import aquality.selenium.elements.interfaces.IComboBox;
-import models.SelectInfo;
+import models.BaseCarInfo;
 import org.openqa.selenium.By;
 import utils.WebElementsUtils;
 
@@ -21,10 +21,10 @@ public class ResearchPage extends BasePage {
         super(By.id("by-search-tab"), "Research");
     }
 
-    public void selectBaseCarInfo(SelectInfo selectInfo) {
-        sltMaker.clickAndSelectByText(selectInfo.getMaker());
-        sltModel.clickAndSelectByText(selectInfo.getModel());
-        sltYear.clickAndSelectByText(selectInfo.getYear());
+    public void selectBaseCarInfo(BaseCarInfo baseCarInfo) {
+        sltMaker.clickAndSelectByText(baseCarInfo.getMaker());
+        sltModel.clickAndSelectByText(baseCarInfo.getModel());
+        sltYear.clickAndSelectByText(baseCarInfo.getYear());
         btnSearch.click();
     }
 

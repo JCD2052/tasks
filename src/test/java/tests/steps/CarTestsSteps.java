@@ -1,8 +1,8 @@
 package tests.steps;
 
+import models.BaseCarInfo;
 import models.CarInfo;
 import models.CarTrimInfo;
-import models.SelectInfo;
 import org.testng.Assert;
 import pages.CarInfoPage;
 import pages.ResearchPage;
@@ -15,15 +15,14 @@ public class CarTestsSteps {
     private static final CarInfoPage carInfoPage = new CarInfoPage();
 
     public static CarInfo getRandomCarInfoUntilAvailable(int trimPosition) {
-        SelectInfo randomSelectInfo = getRandomSelectInfo();
-        Optional<CarTrimInfo> carTrimInfo = getTrimInfoAsOptional(randomSelectInfo, trimPosition);
+        BaseCarInfo randomBaseInfo = getRandomBaseInfo();
+        Optional<CarTrimInfo> carTrimInfo = getTrimInfoAsOptional(randomBaseInfo, trimPosition);
         while (!carTrimInfo.isPresent()) {
             carInfoPage.getHeaderMenu().selectResearchPageFromMenu();
-            randomSelectInfo = getRandomSelectInfo();
-            carTrimInfo = getTrimInfoAsOptional(randomSelectInfo, trimPosition);
+            randomBaseInfo = getRandomBaseInfo();
+            carTrimInfo = getTrimInfoAsOptional(randomBaseInfo, trimPosition);
         }
-        return new CarInfo(randomSelectInfo.getMaker(), randomSelectInfo.getModel(),
-                randomSelectInfo.getYear(), carTrimInfo.get());
+        return new CarInfo(randomBaseInfo, carTrimInfo.get());
     }
 
     public static CarTrimInfo getCarTrimInfoByPosition(int position) {
@@ -42,8 +41,9 @@ public class CarTestsSteps {
                 "Seats count are not matched.");
     }
 
-    private static Optional<CarTrimInfo> getTrimInfoAsOptional(SelectInfo selectInfo, int position) {
-        researchPage.selectBaseCarInfo(selectInfo);
+    private static Optional<CarTrimInfo> getTrimInfoAsOptional(BaseCarInfo baseCarInfo,
+                                                               int position) {
+        researchPage.selectBaseCarInfo(baseCarInfo);
         if (!carInfoPage.checkTrimAvailability()) {
             return Optional.empty();
         }
@@ -51,10 +51,10 @@ public class CarTestsSteps {
         return Optional.of(carTrimInfo);
     }
 
-    private static SelectInfo getRandomSelectInfo() {
+    private static BaseCarInfo getRandomBaseInfo() {
         String maker = researchPage.selectAndGetRandomValueFromMakerSelector();
         String model = researchPage.selectAndGetRandomValueFromModelSelector();
         String year = researchPage.selectAndGetRandomValueFromYearSelector();
-        return new SelectInfo(maker, model, year);
+        return new BaseCarInfo(maker, model, year);
     }
 }
