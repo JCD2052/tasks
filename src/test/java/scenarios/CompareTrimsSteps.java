@@ -2,54 +2,79 @@ package scenarios;
 
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
+import models.BaseCarInfo;
 import models.CarInfo;
+import models.CarTrimInfo;
 import org.testng.Assert;
 import pages.ComparePage;
 import pages.CompareResultPage;
+import pages.TrimInfoPage;
 
 public class CompareTrimsSteps extends CommonSteps {
+    private final CompareResultPage compareResultPage = new CompareResultPage();
+    private final TrimInfoPage trimInfoPage = new TrimInfoPage();
     private final ComparePage comparePage = new ComparePage();
-    private final CompareResultPage resultPage = new CompareResultPage();
 
-    @When("Go to footer menu and go to Compare page.")
-    public void goToFooterMenuAndGoToComparePage() {
-        researchPage.getFooterMenu().selectCompare();
+    @When("Select trim {int}.")
+    public void selectTrimInt(int trimPosition) {
+        carInfoPage.selectTrimByPosition(trimPosition);
     }
 
-    @When("Start to compare {string} and {string}.")
-    public void startToCompareStoredCars(String firstCarName, String secondCarName) {
-        CarInfo carInfo1 = (CarInfo) scenarioContext.getContext(firstCarName); //get from context.
-        CarInfo carInfo2 = (CarInfo) scenarioContext.getContext(secondCarName);//get from context.
-        comparePage.startCarsComparison(carInfo1, carInfo2);
+    @Then("Check if I am on Trim info Page.")
+    public void checkIfIAmOnTrimInfoPage() {
+        Assert.assertTrue(trimInfoPage.waitForLoad(), "Page hasn't been loaded");
     }
 
-    @When("From this \\(research) page go to header and select Research & reviews tab.")
-    public void fromResearchPageGoToHeaderAndSelectResearchReviewsTab() {
-        researchPage.getHeaderMenu().selectResearchPageFromMenu();
+    @When("Store info about car as {string}.")
+    public void storeInfoAboutCar(String context) {
+        BaseCarInfo baseCarInfo = scenarioContext.getContext(context);
+        CarTrimInfo carTrimInfo = new CarTrimInfo(trimInfoPage.getDriveTrainType(),
+                trimInfoPage.getSeatsCount(), trimInfoPage.getEngineInfo());
+        scenarioContext.setContext(context, new CarInfo(baseCarInfo, carTrimInfo));
     }
 
-    @When("Store info about car with position {int} as {string}.")
-    public void storeInfoAboutCarWithPosition(int position, String name) {
-        CarInfo receivedCar = resultPage.getCarInfoByPosition(position);
-        scenarioContext.setContext(name, receivedCar);
+    @When("Go to compare page from footer.")
+    public void goToComparePageFromFooter() {
+        goToHomePage();
+        homePage.getFooterMenu().selectCompare();
     }
 
-    @Then("Check whether {string} info from Research Page matches with {string} info from Compare Page.")
-    public void checkWhetherInfoFromResearchPageMatchesWithInfoFromComparePage(String car1,
-                                                                               String car2) {
-        CarInfo receivedFistCar = (CarInfo) scenarioContext.getContext(car1); //get from context
-        CarInfo firstCar = (CarInfo) scenarioContext.getContext(car2); //get from context.
-        Assert.assertEquals(firstCar, receivedFistCar,
-                "Car Info from Research page doesn't match with Car Info from compare page");
+    @Then("Check if am on Compare page.")
+    public void checkIfAmOnComparePage() {
+        Assert.assertTrue(comparePage.waitForLoad(), "Compare page hasn't been loaded.");
     }
 
-    @Then("Check if I am on reviews page.")
-    public void checkIfIAmInReviewsPage() {
-        Assert.assertTrue(researchPage.waitForLoad(), "Research Page hasn't been loaded.");
+    @When("Fill fields with {string} and {string} and click compare.")
+    public void fillFieldsAndStartCompare(String firstCarStoreName, String secondCarStoreName) {
+        CarInfo firstCar = scenarioContext.getContext(firstCarStoreName);
+        CarInfo secondCar = scenarioContext.getContext(secondCarStoreName);
+        comparePage.startCarsComparison(firstCar, secondCar);
     }
 
-    @Then("Check if I am on compare page.")
-    public void checkIfIAmOnComparePage() {
-        Assert.assertTrue(comparePage.waitForLoad(), "Compare Page hasn't been loaded.");
+    @Then("Check if I am on Compare Result page.")
+    public void checkIfIAmOnCompareResultPage() {
+        Assert.assertTrue(compareResultPage.waitForLoad(),
+                "Compare Result page hasn't been loaded");
+    }
+
+    @When("Take {int} car and store it as {string}.")
+    public void takeCarInfoAndStoreToCompare(int position, String context) {
+        CarInfo carInfo = compareResultPage.getCarInfoByPosition(position);
+        scenarioContext.setContext(context, carInfo);
+    }
+
+    @Then("Check if trim info {string} and {string} are matched.")
+    public void checkIfTrimInfosAreMatched(String firstCarContext, String secondCarContext) {
+        CarTrimInfo firstTrimInfo = ((CarInfo) scenarioContext.getContext(firstCarContext))
+                .getTrimInfo();
+        CarTrimInfo secondTrimInfo = ((CarInfo) scenarioContext.getContext(secondCarContext))
+                .getTrimInfo();
+
+        Assert.assertEquals(firstTrimInfo.getDrivetrainType(), secondTrimInfo.getDrivetrainType(),
+                "Drivetrains are not matched.");
+        Assert.assertEquals(firstTrimInfo.getEngine(), secondTrimInfo.getEngine(),
+                "Engines are not matched.");
+        Assert.assertEquals(firstTrimInfo.getSeatsCount(), secondTrimInfo.getSeatsCount(),
+                "Seats count are not matched.");
     }
 }

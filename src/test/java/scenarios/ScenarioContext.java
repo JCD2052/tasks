@@ -15,8 +15,9 @@ public class ScenarioContext {
         scenarioContext.put(key, value);
     }
 
-    public Object getContext(String key) {
-        return scenarioContext.get(key);
+    @SuppressWarnings("unchecked")
+    public <T> T getContext(String key) {
+        return (T) scenarioContext.get(key);
     }
 
 }

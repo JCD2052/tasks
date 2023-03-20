@@ -1,9 +1,13 @@
 Feature: Car service test cases.
 
+  Background:
+    Given Go to home page
+    Then Check if I am on home page.
+
   Scenario Outline: Compare trims info on different pages.
     When Go to header and select Research & reviews tab.
     Then Check if I am on reviews page.
-    When Select car info: <maker> <model> <year>' and click search. Store it as 'First car'
+    When Select car info: '<maker>' '<model>' '<year>' and click search. Store it as 'First car'
     Then Check if I am on car Info page.
     When Select trim 1.
     Then Check if I am on Trim info Page.
@@ -11,7 +15,7 @@ Feature: Car service test cases.
 
     When Go to header and select Research & reviews tab.
     Then Check if I am on reviews page.
-    When Select car info: <maker> <model> <year>' and click search. Store it as 'Second car'
+    When Select car info: '<maker>' '<model>' '<year>' and click search. Store it as 'Second car'
     Then Check if I am on car Info page.
     When Select trim 1.
     Then Check if I am on Trim info Page.
@@ -27,13 +31,14 @@ Feature: Car service test cases.
     Then Check if trim info 'First car>' and 'First car from compare' are matched.
     And Check if trim info 'Second car>' and 'Second car from compare' are matched.
     Examples:
-      | maker | model | year |
-
+      | maker      | model  | year |
+      | Volkswagen | Passat | 2016 |
+      | Volkswagen | Golf   | 2017 |
 
   Scenario Outline: Compare new car price and used car price:
     When Go to header and select Research & reviews tab.
     Then Check if I am on reviews page.
-    When Select car info: <maker> <model> <year>' and click search. Store it as 'First Car'
+    When Select car info: '<maker>' '<model>' '<year>' and click search. Store it as 'First car'
     Then Check if I am on car Info page.
     When Save trim name on position 1 as 'Trim name'.
     And Save trim price on position 1 as 'New car price'.
@@ -47,6 +52,8 @@ Feature: Car service test cases.
     When Get first card, get its price and store it as 'Used car price'.
     Then Check that 'Used car price' lower then 'New car price'.
     Examples:
-      | maker | model | year | used | zipcode | distance | price |
+      | maker      | model  | year | used | zipcode | distance | price        |
+      | Volkswagen | Passat | 2016 | Used | 10001   | 20 Miles | No max price |
+      | Audi       | Q7     | 2022 | Used | 10001   | 20 Miles | No max price |
 
 
