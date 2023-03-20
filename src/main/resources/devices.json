@@ -1,10 +1,4 @@
 {
-  "iOS_Simulator": {
-    "capabilities": {
-      "deviceName": "iPhone 8",
-      "platformVersion": "16.2"
-    }
-  },
   "Android_Emulator": {
     "capabilities": {
       "deviceName": "Android Emulator",

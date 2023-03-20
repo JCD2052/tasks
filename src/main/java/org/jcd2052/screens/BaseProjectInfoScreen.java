@@ -7,23 +7,25 @@ import org.jcd2052.utils.StringUtils;
 import org.openqa.selenium.By;
 
 abstract class BaseProjectInfoScreen extends BaseScreen {
-    protected BaseProjectInfoScreen(By locator, String name) {
+    private final String projectNameLocator;
+    private final String projectDeadlineLocator;
+    private final String projectPercentLocator;
+
+    protected BaseProjectInfoScreen(By locator, String name, String projectNameLocator,
+                                    String projectDeadlineLocator, String projectPercentLocator) {
         super(locator, name);
+        this.projectNameLocator = projectNameLocator;
+        this.projectDeadlineLocator = projectDeadlineLocator;
+        this.projectPercentLocator = projectPercentLocator;
     }
 
-    protected abstract String getProjectNameLocator();
-
-    protected abstract String getProjectDeadlineLocator();
-
-    protected abstract String getProjectPercentFundLocator();
-
     protected ProjectInfo getProjectInfoFromElementCard(IElement element) {
-        String percent = element.findChildElement(By.xpath(getProjectPercentFundLocator()),
+        String percent = element.findChildElement(By.xpath(projectPercentLocator),
                 ElementType.LABEL).getText();
-        String deadline = element.findChildElement(By.xpath(getProjectDeadlineLocator()),
+        String deadline = element.findChildElement(By.xpath(projectDeadlineLocator),
                 ElementType.LABEL).getText();
         String projectName = StringUtils.substringBeforeOrReturnOrigin(
-                element.findChildElement(By.xpath(getProjectNameLocator()), ElementType.LABEL)
+                element.findChildElement(By.xpath(projectNameLocator), ElementType.LABEL)
                         .getText(), ".");
         return new ProjectInfo(deadline, percent, projectName);
     }

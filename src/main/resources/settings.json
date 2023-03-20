@@ -13,14 +13,6 @@
         "androidInstallTimeout": 120000,
         "uiautomator2ServerInstallTimeout": 120000
       }
-    },
-    "ios": {
-      "deviceKey": "<KEY_OF_IOS_DEVICE_FROM_DEVICES_JSON>",
-      "applicationPath": "./src/test/resources/apps/TestApp.app.zip",
-      "capabilities": {
-        "platformName": "iOS",
-        "automationName": "XCUITest"
-      }
     }
   },
   "localServiceSettings": {

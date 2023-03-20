@@ -1,8 +1,9 @@
 package org.jcd2052.screens;
 
+import aquality.appium.mobile.actions.SwipeDirection;
 import aquality.appium.mobile.elements.ElementType;
 import aquality.appium.mobile.elements.interfaces.IButton;
-import aquality.appium.mobile.elements.interfaces.IElement;
+import aquality.appium.mobile.elements.interfaces.ILabel;
 import org.jcd2052.models.ProjectInfo;
 import org.jcd2052.utils.ScreenUtils;
 import org.openqa.selenium.By;
@@ -21,7 +22,8 @@ public class MainScreen extends BaseProjectInfoScreen {
 
     public MainScreen() {
         super(By.xpath("//android.widget.ImageView[@content-desc='Kickstarter']"),
-                "Main Screen");
+                "Main Screen",
+                PROJECT_NAME_LOCATOR, PROJECT_DEADLINE_LOCATOR, PROJECT_PERCENT_FUND_LOCATOR);
     }
 
     public void clickToSearch() {
@@ -29,10 +31,9 @@ public class MainScreen extends BaseProjectInfoScreen {
     }
 
     public ProjectInfo getProjectInfo(int position) {
-        IElement projectCard = getProjectCardsOnScreen().get(position - 1);
+        ILabel projectCard = getProjectCardsOnScreen().get(position - 1);
         return getProjectInfoFromElementCard(projectCard);
     }
-
 
     public boolean waitForProjectsLoading() {
         return getElementFactory().getLabel(By.xpath(PROJECT_CARD_LOCATOR), "Project card")
@@ -43,14 +44,12 @@ public class MainScreen extends BaseProjectInfoScreen {
         int elementsCenterHeight = getFirstProject().getCenter().getY();
         Point startPoint = new Point(ScreenUtils.getScreenSize().getX(),
                 elementsCenterHeight);
-        Point endPoint = new Point(0, elementsCenterHeight);
-        ScreenUtils.swipe(startPoint, endPoint);
+        ScreenUtils.swipeToEdgeOfScreen(startPoint, SwipeDirection.LEFT);
     }
 
     public void swipeDown() {
         Point startPoint = getFirstProject().getCenter();
-        Point endPoint = new Point(startPoint.getX(), 0);
-        ScreenUtils.swipe(startPoint, endPoint);
+        ScreenUtils.swipeToEdgeOfScreen(startPoint, SwipeDirection.DOWN);
     }
 
     public void swipeToShowSearch() {
@@ -61,26 +60,11 @@ public class MainScreen extends BaseProjectInfoScreen {
         ScreenUtils.swipe(centreOfScreen, endPoint);
     }
 
-    @Override
-    protected String getProjectNameLocator() {
-        return PROJECT_NAME_LOCATOR;
+    private List<ILabel> getProjectCardsOnScreen() {
+        return getElementFactory().findElements(By.xpath(PROJECT_CARD_LOCATOR), ElementType.LABEL);
     }
 
-    @Override
-    protected String getProjectDeadlineLocator() {
-        return PROJECT_DEADLINE_LOCATOR;
-    }
-
-    @Override
-    protected String getProjectPercentFundLocator() {
-        return PROJECT_PERCENT_FUND_LOCATOR;
-    }
-
-    private List<IElement> getProjectCardsOnScreen() {
-        return getElementFactory().findElements(By.xpath(PROJECT_CARD_LOCATOR), ElementType.BUTTON);
-    }
-
-    private IElement getFirstProject() {
+    private ILabel getFirstProject() {
         return getProjectCardsOnScreen()
                 .stream()
                 .findFirst()

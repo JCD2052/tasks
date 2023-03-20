@@ -15,7 +15,8 @@ public class SearchScreen extends BaseProjectInfoScreen {
             .getTextBox(By.xpath(SEARCH_INPUT_LOCATOR), "Search text input.");
 
     public SearchScreen() {
-        super(By.xpath(SEARCH_INPUT_LOCATOR), "Search Screen");
+        super(By.xpath(SEARCH_INPUT_LOCATOR), "Search Screen",
+                PROJECT_NAME_LOCATOR, PROJECT_DEADLINE_LOCATOR, PROJECT_PERCENT_FUND_LOCATOR);
     }
 
     public void searchProject(String projectName) {
@@ -29,21 +30,6 @@ public class SearchScreen extends BaseProjectInfoScreen {
 
     public ProjectInfo getProjectInfo(String projectName) {
         return getProjectInfoFromElementCard(getSearchedElement(projectName));
-    }
-
-    @Override
-    protected String getProjectNameLocator() {
-        return PROJECT_NAME_LOCATOR;
-    }
-
-    @Override
-    protected String getProjectDeadlineLocator() {
-        return PROJECT_DEADLINE_LOCATOR;
-    }
-
-    @Override
-    protected String getProjectPercentFundLocator() {
-        return PROJECT_PERCENT_FUND_LOCATOR;
     }
 
     private IButton getSearchedElement(String projectName) {
