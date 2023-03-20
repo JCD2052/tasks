@@ -1,16 +1,28 @@
-package scenarios;
+package bddtests.scenarios;
 
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
+import models.BaseCarInfo;
 import models.pagemodels.SearchInfo;
 import org.testng.Assert;
+import pages.CarInfoPage;
 import pages.CarsForSalePage;
+import pages.ResearchPage;
 import pages.SearchResultPage;
 
-public class CarsForSaleSteps extends CommonSteps {
+public class CarsForSaleSteps {
     private final SearchResultPage searchResultPage = new SearchResultPage();
     private final CarsForSalePage carsForSalePage = new CarsForSalePage();
+    private final CarInfoPage carInfoPage = new CarInfoPage();
+    private final ScenarioContext scenarioContext = new ScenarioContext();
+    private final ResearchPage researchPage = new ResearchPage();
+
+    @When("Select car info: {string} {string} {string} and click search.")
+    public void selectCarInfoClickSearch(String maker, String model, String year) {
+        BaseCarInfo baseCarInfo = new BaseCarInfo(maker, model, year);
+        researchPage.selectBaseCarInfo(baseCarInfo);
+    }
 
     @When("Save trim name on position {int} as {string}.")
     public void saveTrimNameOnPosition(int trimPosition, String context) {
@@ -26,8 +38,7 @@ public class CarsForSaleSteps extends CommonSteps {
 
     @When("Go to header and select Cars for Sale tab.")
     public void goToHeaderAndSelectCarsForSaleTab() {
-        goToHomePage();
-        homePage.getHeaderMenu().selectCarsForSalesPageFromMenu();
+        carInfoPage.getHeaderMenu().selectCarsForSalesPageFromMenu();
     }
 
     @Then("Check if I am on Cars for Sale page.")

@@ -1,4 +1,4 @@
-package scenarios;
+package bddtests.scenarios;
 
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
@@ -6,14 +6,27 @@ import models.BaseCarInfo;
 import models.CarInfo;
 import models.CarTrimInfo;
 import org.testng.Assert;
+import pages.CarInfoPage;
 import pages.ComparePage;
 import pages.CompareResultPage;
+import pages.ResearchPage;
 import pages.TrimInfoPage;
 
-public class CompareTrimsSteps extends CommonSteps {
+public class CompareTrimsSteps {
     private final CompareResultPage compareResultPage = new CompareResultPage();
     private final TrimInfoPage trimInfoPage = new TrimInfoPage();
     private final ComparePage comparePage = new ComparePage();
+    private final CarInfoPage carInfoPage = new CarInfoPage();
+    private final ScenarioContext scenarioContext = new ScenarioContext();
+    private final ResearchPage researchPage = new ResearchPage();
+
+    @When("Select car info: {string} {string} {string} and click search. Store it as {string}")
+    public void selectCarInfoClickSearchAndStoreContext(String maker, String model, String year,
+                                                        String context) {
+        BaseCarInfo baseCarInfo = new BaseCarInfo(maker, model, year);
+        scenarioContext.setContext(context, baseCarInfo);
+        researchPage.selectBaseCarInfo(baseCarInfo);
+    }
 
     @When("Select trim {int}.")
     public void selectTrimInt(int trimPosition) {
@@ -35,8 +48,7 @@ public class CompareTrimsSteps extends CommonSteps {
 
     @When("Go to compare page from footer.")
     public void goToComparePageFromFooter() {
-        goToHomePage();
-        homePage.getFooterMenu().selectCompare();
+        trimInfoPage.getFooterMenu().selectCompare();
     }
 
     @Then("Check if am on Compare page.")

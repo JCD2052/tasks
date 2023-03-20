@@ -38,7 +38,7 @@ Feature: Car service test cases.
   Scenario Outline: Compare new car price and used car price:
     When Go to header and select Research & reviews tab.
     Then Check if I am on reviews page.
-    When Select car info: '<maker>' '<model>' '<year>' and click search. Store it as 'First car'
+    When Select car info: '<maker>' '<model>' '<year>' and click search.
     Then Check if I am on car Info page.
     When Save trim name on position 1 as 'Trim name'.
     And Save trim price on position 1 as 'New car price'.
