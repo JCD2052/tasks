@@ -8,6 +8,9 @@ trigger:
 
 pool:
   vmImage: ubuntu-latest
+  name: MyLocalPool
+  demands:
+  - agent.name -equals 01
 
 steps:
 - task: Maven@3
