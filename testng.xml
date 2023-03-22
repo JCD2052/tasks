@@ -3,7 +3,7 @@
 <suite name="Car test suite">
     <test name="Car web site tests">
         <classes>
-            <class name="bddtests.tesrunners.TestRunner"/>
+            <class name="tests.SimpleTest"/>
         </classes>
     </test>
 </suite>
