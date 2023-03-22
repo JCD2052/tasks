@@ -3,8 +3,6 @@ package bddtests.tesrunners;
 import io.cucumber.testng.AbstractTestNGCucumberTests;
 import io.cucumber.testng.CucumberOptions;
 import org.testng.annotations.DataProvider;
-//test commit
-
 @CucumberOptions(
         features = {"src/test/java/bddtests/features"},
         glue = {
