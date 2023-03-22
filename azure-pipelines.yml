@@ -22,4 +22,4 @@ steps:
     jdkArchitectureOption: 'x64'
     publishJUnitResults: false
     testResultsFiles: '**/surefire-reports/TEST-*.xml'
-    goals: 'clean test -DMyEnv1=$(MyEnv2) -DMyEnv1=$(DMyEnv1)'
+    goals: 'clean test -DMyEnv1=$(MyEnv1) -DMyEnv2=$(MyEnv2)'
