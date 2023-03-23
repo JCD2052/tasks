@@ -3,6 +3,13 @@
 # Add steps that analyze code, save build artifacts, deploy, and more:
 # https://docs.microsoft.com/azure/devops/pipelines/languages/java
 
+schedules:
+- cron: "0 2 1-7 * SUN"
+  displayName: 25th 5:30 AM (IST) Every Month
+  branches:
+    include:
+    - azure_test_branch
+
 trigger:
 - car_task_cucumber
 - azure_test_branch
