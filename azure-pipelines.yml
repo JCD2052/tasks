@@ -22,10 +22,13 @@ steps:
     jdkArchitectureOption: 'x64'
     publishJUnitResults: false
     testResultsFiles: '**/surefire-reports/TEST-*.xml'
-    goals: 'clean test -DMyEnv1=$(MyEnv1) -DMyEnv2=$(MyEnv2)'
+    goals: 'clean test'
+    options: '-DMyEnv1=$(MyEnv1) -DMyEnv2=$(MyEnv2)'
 - task: CopyFiles@2
   inputs:
-    Contents: '**'
+    Contents: |
+        **/log/*.log
+        **/surefire-reports/**
     TargetFolder: '$(build.artifactstagingdirectory)'
 - task: PublishBuildArtifacts@1
   inputs:
