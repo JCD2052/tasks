@@ -44,7 +44,7 @@ Feature: Car service test cases.
     And Save trim price on position 1 as 'New car price'.
     When Go to header and select Cars for Sale tab.
     Then Check if I am on Cars for Sale page.
-    When Search for: '<model>', '<maker>', '<used>', '<zipcode>', '<distance>', '<price>'.
+    When Search for: '<maker>', '<model>', '<used>', '<zipcode>', '<distance>', '<price>'.
     Then Check if I am on Search Result page.
     And From filter menu, select year '<year>'.
     And From filter menu, select trim stored as 'Trim name'.
@@ -53,7 +53,7 @@ Feature: Car service test cases.
     Then Check that 'Used car price' lower then 'New car price'.
     Examples:
       | maker      | model  | year | used | zipcode | distance | price        |
-      | Volkswagen | Passat | 2016 | Used | 10001   | 20 Miles | No max price |
-      | Audi       | Q7     | 2022 | Used | 10001   | 20 Miles | No max price |
+      | Volkswagen | Passat | 2016 | Used | 10001   | 20 miles | No max price |
+      | Audi       | Q7     | 2022 | Used | 10001   | 20 miles | No max price |
 
 
