@@ -78,7 +78,7 @@ public class CarsForSaleSteps {
 
     @When("Get first card, get its price and store it as {string}.")
     public void getFirstCardGetItsPrice(String context) {
-        int usedCarPrice = searchResultPage.getFirstCard().getPrice();
+        int usedCarPrice = searchResultPage.getFirstCard().price();
         scenarioContext.setContext(context, usedCarPrice);
     }
 

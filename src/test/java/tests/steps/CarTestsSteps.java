@@ -17,7 +17,7 @@ public class CarTestsSteps {
     public static CarInfo getRandomCarInfoUntilAvailable(int trimPosition) {
         BaseCarInfo randomBaseInfo = getRandomBaseInfo();
         Optional<CarTrimInfo> carTrimInfo = getTrimInfoAsOptional(randomBaseInfo, trimPosition);
-        while (!carTrimInfo.isPresent()) {
+        while (carTrimInfo.isEmpty()) {
             carInfoPage.getHeaderMenu().selectResearchPageFromMenu();
             randomBaseInfo = getRandomBaseInfo();
             carTrimInfo = getTrimInfoAsOptional(randomBaseInfo, trimPosition);
@@ -33,11 +33,11 @@ public class CarTestsSteps {
     }
 
     public static void assertCarTrimInfo(CarTrimInfo firstTrimInfo, CarTrimInfo secondTrimInfo) {
-        Assert.assertEquals(firstTrimInfo.getDrivetrainType(), secondTrimInfo.getDrivetrainType(),
+        Assert.assertEquals(firstTrimInfo.drivetrainType(), secondTrimInfo.drivetrainType(),
                 "Drivetrains are not matched.");
-        Assert.assertEquals(firstTrimInfo.getEngine(), secondTrimInfo.getEngine(),
+        Assert.assertEquals(firstTrimInfo.engine(), secondTrimInfo.engine(),
                 "Engines are not matched.");
-        Assert.assertEquals(firstTrimInfo.getSeatsCount(), secondTrimInfo.getSeatsCount(),
+        Assert.assertEquals(firstTrimInfo.seatsCount(), secondTrimInfo.seatsCount(),
                 "Seats count are not matched.");
     }
 

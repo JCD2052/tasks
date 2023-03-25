@@ -22,11 +22,11 @@ public class AddCarToCompareCardForm extends Form {
 
     public void addCarToCompare(CarInfo carInfo) {
         makerSelectBox.state().waitForClickable();
-        makerSelectBox.clickAndSelectByText(carInfo.getBaseCarInfo().getMaker());
+        makerSelectBox.clickAndSelectByText(carInfo.baseCarInfo().maker());
         modelSelectBox.state().waitForClickable();
-        modelSelectBox.clickAndSelectByText(carInfo.getBaseCarInfo().getModel());
+        modelSelectBox.clickAndSelectByText(carInfo.baseCarInfo().model());
         yearSelectBox.state().waitForClickable();
-        yearSelectBox.clickAndSelectByText( carInfo.getBaseCarInfo().getYear());
+        yearSelectBox.clickAndSelectByText( carInfo.baseCarInfo().year());
     }
 
     private static IComboBox createComboBoxByPosition(String name, int position) {

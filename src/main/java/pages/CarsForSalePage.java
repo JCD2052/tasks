@@ -28,14 +28,14 @@ public class CarsForSalePage extends BasePage {
     }
 
     public void search(SearchInfo searchInfo) {
-        newUsedSelectBox.clickAndSelectByText(searchInfo.getNewUsed());
+        newUsedSelectBox.clickAndSelectByText(searchInfo.newUsed());
         makerSelectBox.state().waitForClickable();
-        makerSelectBox.clickAndSelectByText(searchInfo.getMaker());
+        makerSelectBox.clickAndSelectByText(searchInfo.maker());
         modelSelectBox.state().waitForClickable();
-        modelSelectBox.clickAndSelectByText(searchInfo.getModel());
-        priceSelectBox.clickAndSelectByText(searchInfo.getPrice());
-        distanceSelectBox.clickAndSelectByText(searchInfo.getDistance());
-        zipCodeTextInput.clearAndType(searchInfo.getZipCode());
+        modelSelectBox.clickAndSelectByText(searchInfo.model());
+        priceSelectBox.clickAndSelectByText(searchInfo.price());
+        distanceSelectBox.clickAndSelectByText(searchInfo.distance());
+        zipCodeTextInput.clearAndType(searchInfo.zipCode());
         searchButton.state().waitForClickable();
         searchButton.click();
     }

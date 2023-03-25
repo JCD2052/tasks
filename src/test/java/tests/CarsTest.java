@@ -55,8 +55,8 @@ public class CarsTest extends BaseTest {
         CarInfo receivedFistCar = compareResultPage.getCarInfoByPosition(1);
         CarInfo receivedSecondCar = compareResultPage.getCarInfoByPosition(2);
 
-        CarTestsSteps.assertCarTrimInfo(firstCar.getTrimInfo(), receivedFistCar.getTrimInfo());
-        CarTestsSteps.assertCarTrimInfo(secondCar.getTrimInfo(), receivedSecondCar.getTrimInfo());
+        CarTestsSteps.assertCarTrimInfo(firstCar.trimInfo(), receivedFistCar.trimInfo());
+        CarTestsSteps.assertCarTrimInfo(secondCar.trimInfo(), receivedSecondCar.trimInfo());
     }
 
     @Test
@@ -80,18 +80,18 @@ public class CarsTest extends BaseTest {
         CarsForSalePage carsForSalePage = new CarsForSalePage();
         Assert.assertTrue(carsForSalePage.waitForLoad(),
                 "Cars for sale page hasn't been loaded");
-        SearchInfo searchInfo = new SearchInfo(baseCarInfo.getMaker(), baseCarInfo.getModel(),
+        SearchInfo searchInfo = new SearchInfo(baseCarInfo.maker(), baseCarInfo.model(),
                 "Used", "10001", "20 miles", "No max price");
         carsForSalePage.search(searchInfo);
         SearchResultPage searchResultPage = new SearchResultPage();
         Assert.assertTrue(searchResultPage.waitForLoad(),
                 "Search Result Page hasn't been loaded");
 
-        searchResultPage.getFilterMenu().selectMaxYear(baseCarInfo.getYear());
+        searchResultPage.getFilterMenu().selectMaxYear(baseCarInfo.year());
         searchResultPage.getFilterMenu().selectTrim(trimName);
 
         Assert.assertTrue(searchResultPage.isContentFound(), "No cards found.");
-        int usedCarPrice = searchResultPage.getFirstCard().getPrice();
+        int usedCarPrice = searchResultPage.getFirstCard().price();
         Assert.assertTrue(usedCarPrice < newCarPrice,
                 String.format("New car price %d should be greater than use car price %d",
                         newCarPrice, usedCarPrice));

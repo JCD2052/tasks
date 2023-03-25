@@ -7,7 +7,6 @@ import pages.forms.FilterMenu;
 import utils.StringUtils;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class SearchResultPage extends BasePage {
     private static final String VEHICLE_CARD_LOCATOR = "//div[@id='vehicle-cards-container']//div[contains(@id, 'vehicle-card')]";
@@ -44,6 +43,6 @@ public class SearchResultPage extends BasePage {
                             ILabel.class).getText();
                     return new CarCard(StringUtils.extractNumbersFromStringAndReturnInt(priceString));
                 })
-                .collect(Collectors.toList());
+                .toList();
     }
 }

@@ -22,9 +22,9 @@ public class ResearchPage extends BasePage {
     }
 
     public void selectBaseCarInfo(BaseCarInfo baseCarInfo) {
-        sltMaker.clickAndSelectByText(baseCarInfo.getMaker());
-        sltModel.clickAndSelectByText(baseCarInfo.getModel());
-        sltYear.clickAndSelectByText(baseCarInfo.getYear());
+        sltMaker.clickAndSelectByText(baseCarInfo.maker());
+        sltModel.clickAndSelectByText(baseCarInfo.model());
+        sltYear.clickAndSelectByText(baseCarInfo.year());
         btnSearch.click();
     }
 

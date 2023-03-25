@@ -78,15 +78,15 @@ public class CompareTrimsSteps {
     @Then("Check if trim info {string} and {string} are matched.")
     public void checkIfTrimInfosAreMatched(String firstCarContext, String secondCarContext) {
         CarTrimInfo firstTrimInfo = ((CarInfo) scenarioContext.getContext(firstCarContext))
-                .getTrimInfo();
+                .trimInfo();
         CarTrimInfo secondTrimInfo = ((CarInfo) scenarioContext.getContext(secondCarContext))
-                .getTrimInfo();
+                .trimInfo();
 
-        Assert.assertEquals(firstTrimInfo.getDrivetrainType(), secondTrimInfo.getDrivetrainType(),
+        Assert.assertEquals(firstTrimInfo.drivetrainType(), secondTrimInfo.drivetrainType(),
                 "Drivetrains are not matched.");
-        Assert.assertEquals(firstTrimInfo.getEngine(), secondTrimInfo.getEngine(),
+        Assert.assertEquals(firstTrimInfo.engine(), secondTrimInfo.engine(),
                 "Engines are not matched.");
-        Assert.assertEquals(firstTrimInfo.getSeatsCount(), secondTrimInfo.getSeatsCount(),
+        Assert.assertEquals(firstTrimInfo.seatsCount(), secondTrimInfo.seatsCount(),
                 "Seats count are not matched.");
     }
 }
