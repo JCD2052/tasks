@@ -12,9 +12,10 @@ import utils.StringUtils;
 
 public class CompareCarCardForm extends Form {
     private static final String CAR_NAME_LINK_LOCATOR_TEMPLATE = "(//a[@data-linkname = 'research-mmy'])[%d]";
-    private static final String BASE_LOCATOR_TEMPLATE = "(//td[@data-qa = '%s-data'])[%d]//div[@class = 'data-point']";
+    private static final String CARD_FORM_LOCATOR_TEMPLATE = "(//td[@data-qa = '%s-data'])[%d]//div[@class = 'data-point']";
     private static final String CAR_LINK = "https://www.cars.com/research/";
     private static final String ENGINE_INFO_TEMPLATE = "%s, %s";
+
     private final ILink carNameLink;
     private final ILabel driveTrainLabel;
     private final ILabel carSeatsLabel;
@@ -36,9 +37,9 @@ public class CompareCarCardForm extends Form {
     public CarInfo getCarInfo() {
         String[] baseCarInfo = StringUtils.substringAfterOrReturnOrigin(getBaseCarInfo(), CAR_LINK)
                 .split("-");
-        String maker = baseCarInfo[0];
-        String model = baseCarInfo[1];
-        String year = baseCarInfo[2].replace("/", "");
+        String maker = baseCarInfo[FormIndex.MAKER_INDEX];
+        String model = baseCarInfo[FormIndex.MODEL_INDEX];
+        String year = baseCarInfo[FormIndex.YEAR_INDEX].replace("/", "");
         String engine = String.format(ENGINE_INFO_TEMPLATE, getHorsePower(), getEngine());
         String driveTrain = getDriveTrain();
         int seats = getSeatsCount();
@@ -68,7 +69,13 @@ public class CompareCarCardForm extends Form {
 
     private static ILabel createLabelByPosition(String name, int position) {
         return AqualityServices.getElementFactory()
-                .getLabel(By.xpath(String.format(BASE_LOCATOR_TEMPLATE, name, position)),
+                .getLabel(By.xpath(String.format(CARD_FORM_LOCATOR_TEMPLATE, name, position)),
                         name + " Label.");
+    }
+
+    private static class FormIndex {
+        private static final int MAKER_INDEX = 0;
+        private static final int MODEL_INDEX = 1;
+        private static final int YEAR_INDEX = 2;
     }
 }

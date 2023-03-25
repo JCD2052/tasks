@@ -1,4 +1,4 @@
-package bddtests.scenarios;
+package bddtests;
 
 import java.util.HashMap;
 import java.util.Map;

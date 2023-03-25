@@ -7,7 +7,7 @@ import models.CarInfo;
 import org.openqa.selenium.By;
 
 public class AddCarToCompareCardForm extends Form {
-    private static final String BASE_SELECTOR_TEMPLATE = "(//select[@id = 'vehicle_picker_%s']) [%d]";
+    private static final String SELECTOR_TEMPLATE = "(//select[@id = 'vehicle_picker_%s']) [%d]";
     private final IComboBox makerSelectBox;
     private final IComboBox modelSelectBox;
     private final IComboBox yearSelectBox;
@@ -31,7 +31,7 @@ public class AddCarToCompareCardForm extends Form {
 
     private static IComboBox createComboBoxByPosition(String name, int position) {
         return AqualityServices.getElementFactory()
-                .getComboBox(By.xpath(String.format(BASE_SELECTOR_TEMPLATE, name, position)),
+                .getComboBox(By.xpath(String.format(SELECTOR_TEMPLATE, name, position)),
                         name + " Select box");
     }
 }

@@ -6,6 +6,9 @@ import utils.StringUtils;
 
 public class TrimInfoPage extends BasePage {
     private static final String BASE_TEMPLATE_FOR_LOCATOR = "//label[contains(@role, 'presentation') and(contains(text(), '%s'))]";
+    private static final String HORSE_POWER_ABBREVIATION = "hp";
+    private static final String HORSE_POWER_ABBREVIATION_WITH_DECIMAL = ".0" + HORSE_POWER_ABBREVIATION;
+
     private final ILabel drivetrainType = getElementFactory()
             .getLabel(By.xpath(String.format(BASE_TEMPLATE_FOR_LOCATOR, "Drive")),
                     "Door count label");
@@ -30,7 +33,7 @@ public class TrimInfoPage extends BasePage {
 
     public String getEngineInfo() {
         return engineLabel.getText()
-                .replace(".0-hp", "hp")
+                .replace(HORSE_POWER_ABBREVIATION_WITH_DECIMAL, HORSE_POWER_ABBREVIATION)
                 .replace(" (", "(");
     }
 }

@@ -30,7 +30,7 @@ public class SearchResultPage extends BasePage {
         return getVehicleCards()
                 .stream()
                 .findFirst()
-                .orElseThrow(() -> new IllegalStateException(""));
+                .orElseThrow(() -> new IllegalStateException("No vehicles cards."));
     }
 
     private List<CarCard> getVehicleCards() {

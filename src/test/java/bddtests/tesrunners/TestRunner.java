@@ -7,7 +7,7 @@ import org.testng.annotations.DataProvider;
 @CucumberOptions(
         features = {"src/test/java/bddtests/features"},
         glue = {
-                "bddtests/scenarios"
+                "bddtests/stepdefenitions"
         })
 public class TestRunner extends AbstractTestNGCucumberTests {
 
