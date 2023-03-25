@@ -28,8 +28,8 @@ Feature: Car service test cases.
     When Take 1 car and store it as 'First car from compare'.
     And Take 2 car and store it as 'Second car from compare'.
 
-    Then Check if trim info 'First car>' and 'First car from compare' are matched.
-    And Check if trim info 'Second car>' and 'Second car from compare' are matched.
+    Then Check if trim info 'First car' and 'First car from compare' are matched.
+    And Check if trim info 'Second car' and 'Second car from compare' are matched.
     Examples:
       | maker      | model  | year |
       | Volkswagen | Passat | 2016 |
