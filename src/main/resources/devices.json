@@ -1,0 +1,8 @@
+{
+  "Android_Emulator": {
+    "capabilities": {
+      "deviceName": "Android Emulator",
+      "autoGrantPermissions": true
+    }
+  }
+}
