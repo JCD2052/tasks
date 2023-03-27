@@ -1,6 +1,7 @@
 package bddtests.stepdefenitions;
 
 import bddtests.ScenarioContext;
+import io.cucumber.java.Transpose;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import models.BaseCarInfo;
@@ -21,10 +22,9 @@ public class CompareTrimsSteps {
     private final ScenarioContext scenarioContext = new ScenarioContext();
     private final ResearchPage researchPage = new ResearchPage();
 
-    @When("I select car info: {string} {string} {string}, click search and store it as {string}")
-    public void selectCarInfoClickSearchAndStoreContext(String maker, String model, String year,
-                                                        String context) {
-        BaseCarInfo baseCarInfo = new BaseCarInfo(maker, model, year);
+    @When("I select car info: click search and store it as {string}")
+    public void selectCarInfoClickSearchAndStoreContext(String context,
+                                                        @Transpose BaseCarInfo baseCarInfo) {
         scenarioContext.setContext(context, baseCarInfo);
         researchPage.selectBaseCarInfo(baseCarInfo);
     }

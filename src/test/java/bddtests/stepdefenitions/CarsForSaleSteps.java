@@ -1,6 +1,7 @@
 package bddtests.stepdefenitions;
 
 import bddtests.ScenarioContext;
+import io.cucumber.java.Transpose;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
@@ -19,9 +20,8 @@ public class CarsForSaleSteps {
     private final ScenarioContext scenarioContext = new ScenarioContext();
     private final ResearchPage researchPage = new ResearchPage();
 
-    @When("I select car info: {string} {string} {string} and click search")
-    public void selectCarInfoClickSearch(String maker, String model, String year) {
-        BaseCarInfo baseCarInfo = new BaseCarInfo(maker, model, year);
+    @When("I select car info and click search")
+    public void selectCarInfoClickSearch(@Transpose BaseCarInfo baseCarInfo) {
         researchPage.selectBaseCarInfo(baseCarInfo);
     }
 
@@ -48,10 +48,8 @@ public class CarsForSaleSteps {
                 "Cars for Sale page hasn't been loaded.");
     }
 
-    @When("I search for: {string}, {string}, {string}, {string}, {string}, {string}")
-    public void searchForCar(String maker, String model, String newUsed,
-                             String zipCode, String distance, String price) {
-        SearchInfo searchInfo = new SearchInfo(maker, model, newUsed, zipCode, distance, price);
+    @When("I search for:")
+    public void searchForCar(@Transpose SearchInfo searchInfo) {
         carsForSalePage.search(searchInfo);
     }
 

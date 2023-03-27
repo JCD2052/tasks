@@ -28,7 +28,7 @@ public class CarsForSalePage extends BasePage {
     }
 
     public void search(SearchInfo searchInfo) {
-        newUsedSelectBox.clickAndSelectByText(searchInfo.newUsed());
+        newUsedSelectBox.clickAndSelectByText(searchInfo.stockType());
         makerSelectBox.state().waitForClickable();
         makerSelectBox.clickAndSelectByText(searchInfo.maker());
         modelSelectBox.state().waitForClickable();
