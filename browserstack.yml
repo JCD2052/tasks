@@ -1,0 +1,27 @@
+userName: bsuser_6B1DQw
+accessKey: jRJmqyD7eHmj64qWWdsG
+projectName: BrowserStack Kotak test.
+buildName: BrowserStack Kotak
+buildIdentifier: '#${BUILD_NUMBER}'
+framework: testng
+
+platforms:
+  - deviceName: iPhone 14 Pro Max
+    osVersion: 16
+    browserName: safari
+    deviceOrientation: portrait
+  - os: Windows
+    osVersion: 10
+    browserName: Firefox
+    browserVersion: 102.0
+  - os: OS X
+    osVersion: Ventura
+    browserName: Chrome
+    browserVersion: latest
+
+parallelsPerPlatform: 1
+browserstackLocal: false
+debug: true
+networkLogs: true
+consoleLogs: info
+testObservability: true
