@@ -1,0 +1,44 @@
+{
+  "mappings": [
+    {
+      "name": "Retrieve Items - Success",
+      "priority": 2,
+      "request": {
+        "url": "/jsontext/mapping3",
+        "method": "POST"
+      },
+      "response": {
+        "body": "{{randomValue length=20 type='ALPHANUMERIC'}}",
+        "headers": {
+          "content-type": "application/json"
+        },
+        "status": 500
+      }
+    },
+    {
+      "name": "Retrieve Items - 404",
+      "priority": 1,
+      "request": {
+        "headers": {
+          "CustomType": {
+            "equalTo": "CustomValue"
+          }
+        },
+        "bodyPatterns": [
+          {
+            "contains": "TestValue1"
+          }
+        ],
+        "method": "POST",
+        "url": "/jsontext/mapping3"
+      },
+      "response": {
+        "status": 404,
+        "headers": {
+          "Content-Type": "text/plain"
+        },
+        "body": "{{randomValue length=20 type='ALPHANUMERIC'}}"
+      }
+    }
+  ]
+}

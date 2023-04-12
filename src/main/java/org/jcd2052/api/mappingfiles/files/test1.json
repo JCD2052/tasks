@@ -1,0 +1,16 @@
+{
+  "response": {
+    "status": 200,
+    "body": "{{randomValue length=100 type='ALPHANUMERIC'}}",
+    "transformers": [
+      "response-template"
+    ],
+    "headers": {
+      "Content-Type": "text/plain"
+    }
+  },
+  "request": {
+    "method": "GET",
+    "url": "/plaintext/mapping1"
+  }
+}
